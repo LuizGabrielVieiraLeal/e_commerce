@@ -1,12 +1,6 @@
-type Product {
-  _id: ID!
-  name: String!
-  description: String
-  price: Float!
-  unit: Unit!
-}
-
 enum Unit {
+  M
+  CM
   CX
   UN
   LT
@@ -15,6 +9,35 @@ enum Unit {
   GR
 }
 
+type Product {
+  _id: ID!
+  name: String!
+  description: String
+  price: Float!
+  unit: Unit!
+}
+
 type Query {
   products: [Product!]!
+  product(_id: ID!): Product!
+}
+
+input ProductCreateInput {
+  name: String!
+  description: String
+  price: Float!
+  unit: Unit!
+}
+
+input ProductUpdateInput {
+  name: String
+  description: String
+  price: Float
+  unit: Unit
+}
+
+type Mutation {
+  createProduct(data: ProductCreateInput!): Product!
+  deleteProduct(_id: ID!): Product!
+  updateProduct(data: ProductUpdateInput!, _id: ID!): Product!
 }

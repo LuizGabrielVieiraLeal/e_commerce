@@ -17,7 +17,7 @@ const productSchema = new Schema({
   },
   unit: {
     type: String,
-    enum: ['CX', 'UN', 'LT', 'ML', 'KG', 'GR'],
+    enum: ['M', 'CM', 'CX', 'UN', 'LT', 'ML', 'KG', 'GR'],
     required: true,
   },
 })
