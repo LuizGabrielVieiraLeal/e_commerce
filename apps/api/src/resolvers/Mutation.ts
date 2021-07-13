@@ -1,11 +1,57 @@
+import { hash, compare } from 'bcryptjs'
 import {
   Resolver,
+  UserSignUpInput,
+  UserSignInInput,
   ProductCreateInput,
   ProductByIdInput,
   ProductUpdateInput,
 } from '../types'
-import { checkExistence } from '../utils'
+import { checkExistence, issueToken } from '../utils'
+import { CustomError } from '../errors'
 
+// User
+const signup: Resolver<UserSignUpInput> = async (_, args, { db }) => {
+  const { User } = db
+  const { data } = args
+
+  const password = await hash(data.password, 10)
+
+  const user = await new User({
+    ...data,
+    password,
+  }).save()
+
+  const { _id: sub, role } = user
+  const token = issueToken({ sub, role })
+
+  return { token, user }
+}
+
+const signin: Resolver<UserSignInInput> = async (_, args, { db }) => {
+  const { User } = db
+  const { email, password } = args.data
+
+  const error = new CustomError(
+    'Invalid credentials!',
+    'IVALID_CREDENTIALS_ERROR',
+  )
+
+  const user = await User.findOne({ email })
+
+  if (!user) throw error
+
+  const isValid = await compare(password, user.password)
+
+  if (!isValid) throw error
+
+  const { _id: sub, role } = user
+  const token = issueToken({ sub, role })
+
+  return { token, user }
+}
+
+// Product
 const createProduct: Resolver<ProductCreateInput> = (_, args, { db }) => {
   const { Product } = db
   const { data } = args
@@ -32,4 +78,4 @@ const updateProduct: Resolver<ProductUpdateInput> = async (_, args, { db }) => {
   return Product.findByIdAndUpdate(_id, data, { new: true })
 }
 
-export default { createProduct, deleteProduct, updateProduct }
+export default { signup, signin, createProduct, deleteProduct, updateProduct }
