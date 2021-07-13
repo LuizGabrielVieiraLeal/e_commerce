@@ -39,6 +39,9 @@ const orderSchema = new Schema(
       enum: ['CASH', 'CREDIT_CARD'],
       required: true,
     },
+    changeFor: {
+      type: Number,
+    },
     change: {
       type: Number,
     },

@@ -21,6 +21,7 @@ export interface Order {
   items: Types.DocumentArray<OrderItemSubdocument>
   total: number
   paymentMethod: OrderPaymentMethod
+  changeFor: number
   change: number
   status: OrderStatus
   createdAt: string
