@@ -1,3 +1,5 @@
+directive @auth(role: UserRole = USER) on FIELD_DEFINITION
+
 # User
 enum UserRole {
   USER
@@ -48,8 +50,8 @@ type Product {
 }
 
 type Query {
-  products: [Product!]!
-  product(_id: ID!): Product!
+  products: [Product!]! @auth
+  product(_id: ID!): Product! @auth(role: ADMIN)
 }
 
 input ProductCreateInput {
