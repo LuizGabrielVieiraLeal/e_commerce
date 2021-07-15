@@ -1,4 +1,4 @@
-directive @auth(role: UserRole = USER) on FIELD_DEFINITION
+directive @auth(role: UserRole) on FIELD_DEFINITION
 
 # User
 enum UserRole {

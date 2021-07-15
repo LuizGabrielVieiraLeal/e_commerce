@@ -9,7 +9,7 @@ services:
       - ./apps/api:/usr/app
   mongo-express:
     container_name: mongo-express
-    image: mongo-express:0.49
+    image: mongo-express:0.54
     ports:
       - "8081:8081"
     environment:
