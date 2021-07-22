@@ -1,16 +1,55 @@
-import { Resolver, ProductByIdInput } from '../types'
-import { checkExistence } from '../utils'
+import {
+  Resolver,
+  UserRole,
+  ProductDocument,
+  ProductByIdInput,
+  OrderDocument,
+  OrderByIdInput,
+} from '../types'
+import { findDocument } from '../utils'
 
+// Product
 const products: Resolver<Record<string, unknown>> = (_, args, { db }) =>
   db.Product.find()
 
 const product: Resolver<ProductByIdInput> = async (_, args, { db }) => {
-  const { Product } = db
   const { _id } = args
 
-  await checkExistence({ db, model: 'Product', field: '_id', value: _id })
-
-  return Product.findById(_id)
+  return await findDocument<ProductDocument>({
+    db,
+    model: 'Product',
+    field: '_id',
+    value: _id,
+  })
 }
 
-export default { products, product }
+// Order
+const orders: Resolver<Record<string, unknown>> = (
+  _,
+  args,
+  { db, authUser },
+) => {
+  const { Order } = db
+  const { _id, role } = authUser
+
+  const conditions = role === UserRole.USER ? { owner: _id } : {}
+
+  return Order.find(conditions)
+}
+
+const order: Resolver<OrderByIdInput> = async (_, args, { db, authUser }) => {
+  const { _id } = args
+  const { _id: ownerId, role } = authUser
+
+  const where = role === UserRole.USER ? { owner: ownerId, _id } : null
+
+  return await findDocument<OrderDocument>({
+    db,
+    model: 'Order',
+    field: '_id',
+    value: _id,
+    where,
+  })
+}
+
+export default { products, product, orders, order }
