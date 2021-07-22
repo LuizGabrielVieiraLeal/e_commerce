@@ -1,12 +1,14 @@
 import { hash, compare } from 'bcryptjs'
 import {
   Resolver,
+  UserRole,
   UserSignUpInput,
   UserSignInInput,
   ProductCreateInput,
   ProductByIdInput,
   ProductUpdateInput,
   ProductDocument,
+  OrderCreateArgs,
 } from '../types'
 import { findDocument, issueToken } from '../utils'
 import { CustomError } from '../errors'
@@ -89,4 +91,35 @@ const updateProduct: Resolver<ProductUpdateInput> = async (_, args, { db }) => {
   return product.save()
 }
 
-export default { signup, signin, createProduct, deleteProduct, updateProduct }
+// Order
+const createOrder: Resolver<OrderCreateArgs> = async (
+  _,
+  args,
+  { db, authUser },
+) => {
+  const { Order } = db
+  const { data } = args
+  const { _id, role } = authUser
+
+  const owner = role === UserRole.USER ? _id : data.owner || _id
+
+  const total =
+    (data.items && data.items.reduce((sum, item) => sum + item.total, 0)) || 0
+
+  const order = await new Order({
+    ...data,
+    total,
+    owner,
+  }).save()
+
+  return order
+}
+
+export default {
+  signup,
+  signin,
+  createProduct,
+  deleteProduct,
+  updateProduct,
+  createOrder,
+}

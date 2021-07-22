@@ -93,6 +93,15 @@ type Order {
   updatedAt: DateTime!
 }
 
+input OrderCreateInput {
+  owner: ID
+  items: [OrderItemCreateInput!]
+  paymentMethod: OrderPaymentMethod!
+  changeFor: Float
+  change: Float
+  status: OrderStatus
+}
+
 # OrderItem
 type OrderItem {
   _id: ID!
@@ -101,6 +110,12 @@ type OrderItem {
   total: Float!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+input OrderItemCreateInput {
+  product: ID!
+  quantity: Float!
+  total: Float!
 }
 
 # Queries and Mutations
@@ -117,4 +132,5 @@ type Mutation {
   createProduct(data: ProductCreateInput!): Product!
   deleteProduct(_id: ID!): Product!
   updateProduct(data: ProductUpdateInput!, _id: ID!): Product!
+  createOrder(data: OrderCreateInput!): Order! @auth
 }

@@ -1,5 +1,5 @@
 import { Schema, Document, Types } from 'mongoose'
-import { User, OrderItemSubdocument } from '.'
+import { User, OrderItemSubdocument, OrderItemCreateInput } from '.'
 
 export enum OrderPaymentMethod {
   CASH,
@@ -34,4 +34,15 @@ export interface OrderDocument extends Order, Document {
 
 export interface OrderByIdInput {
   _id: Schema.Types.ObjectId
+}
+
+type OrderCreateInput = Pick<
+  Order,
+  'owner' | 'paymentMethod' | 'changeFor' | 'change' | 'status'
+>
+
+export interface OrderCreateArgs {
+  data: OrderCreateInput & {
+    items: OrderItemCreateInput[]
+  }
 }
