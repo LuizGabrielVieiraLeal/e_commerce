@@ -39,9 +39,9 @@ const orders: Resolver<Record<string, unknown>> = (
 
 const order: Resolver<OrderByIdInput> = async (_, args, { db, authUser }) => {
   const { _id } = args
-  const { _id: ownerId, role } = authUser
+  const { _id: owner, role } = authUser
 
-  const where = role === UserRole.USER ? { owner: ownerId, _id } : null
+  const where = role === UserRole.USER ? { owner, _id } : null
 
   return await findDocument<OrderDocument>({
     db,

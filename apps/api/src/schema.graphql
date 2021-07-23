@@ -133,4 +133,5 @@ type Mutation {
   deleteProduct(_id: ID!): Product!
   updateProduct(data: ProductUpdateInput!, _id: ID!): Product!
   createOrder(data: OrderCreateInput!): Order! @auth
+  deleteOrder(_id: ID!): Order! @auth
 }

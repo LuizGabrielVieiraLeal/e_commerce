@@ -9,6 +9,8 @@ import {
   ProductUpdateInput,
   ProductDocument,
   OrderCreateArgs,
+  OrderDeleteArgs,
+  OrderDocument,
 } from '../types'
 import { findDocument, issueToken } from '../utils'
 import { CustomError } from '../errors'
@@ -115,6 +117,27 @@ const createOrder: Resolver<OrderCreateArgs> = async (
   return order
 }
 
+const deleteOrder: Resolver<OrderDeleteArgs> = async (
+  _,
+  args,
+  { db, authUser },
+) => {
+  const { _id } = args
+  const { _id: owner, role } = authUser
+
+  const where = role === UserRole.USER ? { _id, owner } : null
+
+  const order = await findDocument<OrderDocument>({
+    db,
+    model: 'Order',
+    field: '_id',
+    value: _id,
+    where,
+  })
+
+  return order.remove()
+}
+
 export default {
   signup,
   signin,
@@ -122,4 +145,5 @@ export default {
   deleteProduct,
   updateProduct,
   createOrder,
+  deleteOrder,
 }

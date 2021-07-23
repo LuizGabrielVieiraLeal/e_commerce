@@ -37,6 +37,6 @@ const findDocument = async <T extends Document>(
 }
 
 const issueToken = (payload: TokenPayload, options?: SignOptions): string =>
-  sign(payload, process.env.JWT_SECRET, { expiresIn: '2h', ...options })
+  sign(payload, process.env.JWT_SECRET, { expiresIn: '1d', ...options })
 
 export { isMongoId, findDocument, issueToken }

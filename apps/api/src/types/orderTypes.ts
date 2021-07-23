@@ -1,4 +1,4 @@
-import { Schema, Document, Types } from 'mongoose'
+import { Document, Types } from 'mongoose'
 import { User, OrderItemSubdocument, OrderItemCreateInput } from '.'
 
 export enum OrderPaymentMethod {
@@ -16,8 +16,8 @@ export enum OrderStatus {
 }
 
 export interface Order {
-  _id: Schema.Types.ObjectId
-  owner: User
+  _id: Types.ObjectId
+  owner: User | Types.ObjectId
   items: Types.DocumentArray<OrderItemSubdocument>
   total: number
   paymentMethod: OrderPaymentMethod
@@ -29,11 +29,11 @@ export interface Order {
 }
 
 export interface OrderDocument extends Order, Document {
-  _id: Schema.Types.ObjectId
+  _id: Types.ObjectId
 }
 
 export interface OrderByIdInput {
-  _id: Schema.Types.ObjectId
+  _id: string
 }
 
 type OrderCreateInput = Pick<
@@ -45,4 +45,8 @@ export interface OrderCreateArgs {
   data: OrderCreateInput & {
     items: OrderItemCreateInput[]
   }
+}
+
+export interface OrderDeleteArgs {
+  _id: string
 }
