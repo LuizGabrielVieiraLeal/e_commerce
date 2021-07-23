@@ -102,6 +102,14 @@ input OrderCreateInput {
   status: OrderStatus
 }
 
+input OrderUpdateInput {
+  owner: ID
+  status: OrderStatus
+  itemsToAdd: [OrderItemCreateInput!]
+  itemsToUpdate: [OrderItemUpdateInput!]
+  itemsToRemove: [ID!]
+}
+
 # OrderItem
 type OrderItem {
   _id: ID!
@@ -113,6 +121,13 @@ type OrderItem {
 }
 
 input OrderItemCreateInput {
+  product: ID!
+  quantity: Float!
+  total: Float!
+}
+
+input OrderItemUpdateInput {
+  _id: ID!
   product: ID!
   quantity: Float!
   total: Float!
@@ -134,4 +149,5 @@ type Mutation {
   updateProduct(data: ProductUpdateInput!, _id: ID!): Product!
   createOrder(data: OrderCreateInput!): Order! @auth
   deleteOrder(_id: ID!): Order! @auth
+  updateOrder(data: OrderUpdateInput!, _id: ID!): Order! @auth
 }
