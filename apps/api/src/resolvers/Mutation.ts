@@ -1,4 +1,5 @@
 import { hash, compare } from 'bcryptjs'
+import { Types } from 'mongoose'
 import {
   Resolver,
   UserRole,
@@ -13,7 +14,7 @@ import {
   OrderUpdateArgs,
   OrderDocument,
 } from '../types'
-import { findDocument, issueToken } from '../utils'
+import { findDocument, findOrderItem, issueToken } from '../utils'
 import { CustomError } from '../errors'
 
 // User
@@ -145,11 +146,11 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
   { db, authUser },
 ) => {
   const { data, _id } = args
-  const { _id: owner, role } = authUser
+  const { _id: user, role } = authUser
 
   const isAdmin = role === UserRole.ADMIN
 
-  const where = !isAdmin ? { _id, owner } : null
+  const where = !isAdmin ? { _id, owner: user } : null
 
   const order = await findDocument<OrderDocument>({
     db,
@@ -159,9 +160,49 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
     where,
   })
 
-  const verifiedOwner = !isAdmin ? owner : data.owner || order.owner
+  const owner = !isAdmin ? user : data.owner || order.owner
 
-  order.owner = verifiedOwner
+  const {
+    itemsToUpdate = [],
+    itemsToRemove = [],
+    itemsToAdd = [],
+    status,
+  } = args.data
+
+  const foundItemsToUpdate = itemsToUpdate.map(orderItem =>
+    findOrderItem(order.items, orderItem._id, 'update'),
+  )
+
+  const foundItemsToRemove = itemsToRemove.map(orderItemId =>
+    findOrderItem(order.items, orderItemId, 'delete'),
+  )
+
+  foundItemsToUpdate.forEach((orderItem, index) =>
+    orderItem.set(itemsToUpdate[index]),
+  )
+
+  foundItemsToRemove.forEach(orderItem => orderItem.remove())
+
+  itemsToAdd.forEach(itemToAdd => {
+    const foundItem = order.items.find(item =>
+      (item.product as Types.ObjectId).equals(itemToAdd.product),
+    )
+
+    if (foundItem) {
+      return foundItem.set({
+        quantity: foundItem.quantity + itemToAdd.quantity,
+        total: foundItem.total + itemToAdd.total,
+      })
+    }
+
+    order.items.push(itemToAdd)
+  })
+
+  const total = order.items.reduce((sum, item) => sum + item.total, 0)
+
+  order.owner = owner
+  order.status = status || order.status
+  order.total = total
 
   return order.save()
 }
