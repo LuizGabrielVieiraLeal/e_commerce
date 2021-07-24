@@ -1,12 +1,11 @@
 <template>
   <q-layout>
-    <q-toolbar class="text-primary q-py-sm shadow-2">
+    <q-toolbar class="text-primary q-py-sm shadow-3">
       <q-img
         :src="require('../assets/app-logo.png')"
-        width="80px"
+        width="100px"
         height="50px"
       />
-      <q-toolbar-title class="text-weight-bold"> Comilão </q-toolbar-title>
       <q-space />
       <q-btn
         class="q-mr-md"
@@ -21,6 +20,34 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <div class="row bg-grey-2 q-py-lg q-pl-lg">
+      <div class="col-xs-12 col-md-8 text-weight-medium">
+        <h5>Fale conosco!</h5>
+        <p>Endereço: Avenida Roberto Silveira, 15, Itaocara - RJ</p>
+        <p>CEP: 28570-000</p>
+        <p>Telefone / Whatsapp: (22) 9 9999-9999</p>
+        <p>Email: sac@comilão.com.br</p>
+      </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="mapouter">
+          <div class="gmap_canvas">
+            <iframe
+              width="600"
+              height="260"
+              id="gmap_canvas"
+              src="https://maps.google.com/maps?q=Avenida%20Roberto%20Silveira,%2015,%20Itaocara&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              frameborder="0"
+              scrolling="no"
+              marginheight="0"
+              marginwidth="0"
+            ></iframe
+            ><a href="https://2piratebay.org">pirate bay</a><br />
+            <a href="https://www.embedgooglemap.net">google maps iframe code</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <q-dialog v-model="dialog" seamless position="right">
       <q-card style="width: 350px">
@@ -76,3 +103,18 @@ export default {
   },
 };
 </script>
+
+<style lang="css" scoped>
+.mapouter {
+  position: relative;
+  text-align: right;
+  height: 260px;
+  width: 600px;
+}
+.gmap_canvas {
+  overflow: hidden;
+  background: none !important;
+  height: 260px;
+  width: 600px;
+}
+</style>

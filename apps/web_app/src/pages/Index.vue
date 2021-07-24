@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <q-parallax :height="600" :speed="0.5">
+    <q-parallax :height="600" :speed="0.5" class="q-mt-xs">
       <template v-slot:media>
         <img
           src="https://www.ceres.org/sites/default/files/2019-01/fast-food-banner.jpg"
