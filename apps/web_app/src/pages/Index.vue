@@ -13,7 +13,7 @@
     </q-parallax>
 
     <div class="row">
-      <div class="col-xs-12 col-md-4 q-pa-lg">
+      <div class="col-xs-12 col-md-4 q-py-lg">
         <q-card class="no-shadow">
           <q-card-section>
             <div class="row">
