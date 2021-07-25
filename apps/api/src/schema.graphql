@@ -31,6 +31,20 @@ input UserSignInInput {
   password: String!
 }
 
+# Category
+type Category {
+  _id: ID!
+  name: String!
+}
+
+input CategoryCreateInput {
+  name: String!
+}
+
+input CategoryUpdateInput {
+  name: String
+}
+
 # Product
 enum Unit {
   M
@@ -135,6 +149,8 @@ input OrderItemUpdateInput {
 
 # Queries and Mutations
 type Query {
+  categories: [Category!]!
+  category(_id: ID!): Category!
   products: [Product!]!
   product(_id: ID!): Product!
   orders: [Order!]! @auth
@@ -144,6 +160,9 @@ type Query {
 type Mutation {
   signup(data: UserSignUpInput!): AuthPayload!
   signin(data: UserSignInInput!): AuthPayload!
+  createCategory(data: CategoryCreateInput!): Category!
+  deleteCategoy(_id: ID!): Category!
+  updateCategory(data: CategoryUpdateInput!, _id: ID!): Category!
   createProduct(data: ProductCreateInput!): Product!
   deleteProduct(_id: ID!): Product!
   updateProduct(data: ProductUpdateInput!, _id: ID!): Product!

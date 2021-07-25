@@ -5,8 +5,24 @@ import {
   ProductByIdInput,
   OrderDocument,
   OrderByIdInput,
+  CategoryDocument,
 } from '../types'
 import { findDocument } from '../utils'
+
+// Category
+const categories: Resolver<Record<string, unknown>> = (_, args, { db }) =>
+  db.Category.find()
+
+const category: Resolver<ProductByIdInput> = async (_, args, { db }) => {
+  const { _id } = args
+
+  return await findDocument<CategoryDocument>({
+    db,
+    model: 'Category',
+    field: '_id',
+    value: _id,
+  })
+}
 
 // Product
 const products: Resolver<Record<string, unknown>> = (_, args, { db }) =>
@@ -52,4 +68,4 @@ const order: Resolver<OrderByIdInput> = async (_, args, { db, authUser }) => {
   })
 }
 
-export default { products, product, orders, order }
+export default { products, categories, category, product, orders, order }

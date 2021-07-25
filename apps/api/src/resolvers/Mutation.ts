@@ -58,6 +58,8 @@ const signin: Resolver<UserSignInInput> = async (_, args, { db }) => {
   return { token, user }
 }
 
+// Category
+
 // Product
 const createProduct: Resolver<ProductCreateInput> = (_, args, { db }) => {
   const { Product } = db
