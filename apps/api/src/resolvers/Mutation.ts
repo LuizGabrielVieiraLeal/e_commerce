@@ -5,8 +5,12 @@ import {
   UserRole,
   UserSignUpInput,
   UserSignInInput,
+  CategoryCreateInput,
+  CategoryByIdInput,
+  CategoryDocument,
   ProductCreateInput,
   ProductByIdInput,
+  CategoryUpdateInput,
   ProductUpdateInput,
   ProductDocument,
   OrderCreateArgs,
@@ -59,6 +63,45 @@ const signin: Resolver<UserSignInInput> = async (_, args, { db }) => {
 }
 
 // Category
+const createCategory: Resolver<CategoryCreateInput> = (_, args, { db }) => {
+  const { Category } = db
+  const { data } = args
+
+  const category = new Category(data)
+  return category.save()
+}
+
+const deleteCategory: Resolver<CategoryByIdInput> = async (_, args, { db }) => {
+  const { _id } = args
+
+  const category = await findDocument<CategoryDocument>({
+    db,
+    model: 'Category',
+    field: '_id',
+    value: _id,
+  })
+
+  return category.remove()
+}
+
+const updateCategory: Resolver<CategoryUpdateInput> = async (
+  _,
+  args,
+  { db },
+) => {
+  const { data, _id } = args
+
+  const category = await findDocument<CategoryDocument>({
+    db,
+    model: 'Category',
+    field: '_id',
+    value: _id,
+  })
+
+  Object.keys(data).forEach(prop => (category[prop] = data[prop]))
+
+  return category.save()
+}
 
 // Product
 const createProduct: Resolver<ProductCreateInput> = (_, args, { db }) => {
@@ -212,6 +255,9 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
 export default {
   signup,
   signin,
+  createCategory,
+  deleteCategory,
+  updateCategory,
   createProduct,
   deleteProduct,
   updateProduct,

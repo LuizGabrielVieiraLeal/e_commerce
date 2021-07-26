@@ -161,7 +161,7 @@ type Mutation {
   signup(data: UserSignUpInput!): AuthPayload!
   signin(data: UserSignInInput!): AuthPayload!
   createCategory(data: CategoryCreateInput!): Category!
-  deleteCategoy(_id: ID!): Category!
+  deleteCategory(_id: ID!): Category!
   updateCategory(data: CategoryUpdateInput!, _id: ID!): Category!
   createProduct(data: ProductCreateInput!): Product!
   deleteProduct(_id: ID!): Product!
