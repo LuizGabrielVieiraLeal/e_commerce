@@ -1,10 +1,11 @@
 import {
   Resolver,
   UserRole,
+  CategoryByIdArgs,
   ProductDocument,
-  ProductByIdInput,
+  ProductByIdArgs,
   OrderDocument,
-  OrderByIdInput,
+  OrderByIdArgs,
   CategoryDocument,
 } from '../types'
 import { findDocument } from '../utils'
@@ -13,7 +14,7 @@ import { findDocument } from '../utils'
 const categories: Resolver<Record<string, unknown>> = (_, args, { db }) =>
   db.Category.find()
 
-const category: Resolver<ProductByIdInput> = async (_, args, { db }) => {
+const category: Resolver<CategoryByIdArgs> = async (_, args, { db }) => {
   const { _id } = args
 
   return await findDocument<CategoryDocument>({
@@ -28,7 +29,7 @@ const category: Resolver<ProductByIdInput> = async (_, args, { db }) => {
 const products: Resolver<Record<string, unknown>> = (_, args, { db }) =>
   db.Product.find()
 
-const product: Resolver<ProductByIdInput> = async (_, args, { db }) => {
+const product: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
   const { _id } = args
 
   return await findDocument<ProductDocument>({
@@ -53,7 +54,7 @@ const orders: Resolver<Record<string, unknown>> = (
   return Order.find(conditions)
 }
 
-const order: Resolver<OrderByIdInput> = async (_, args, { db, authUser }) => {
+const order: Resolver<OrderByIdArgs> = async (_, args, { db, authUser }) => {
   const { _id } = args
   const { _id: owner, role } = authUser
 

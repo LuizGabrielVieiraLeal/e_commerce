@@ -10,14 +10,14 @@ export interface CategoryDocument extends Category, Document {
   _id: Types.ObjectId
 }
 
-export interface CategoryCreateInput {
+export interface CategoryCreateArgs {
   data: OmitId<Category>
 }
 
-export interface CategoryByIdInput {
+export interface CategoryByIdArgs {
   _id: string
 }
 
-export interface CategoryUpdateInput
-  extends CategoryCreateInput,
-    CategoryByIdInput {}
+export interface CategoryUpdateArgs
+  extends CategoryCreateArgs,
+    CategoryByIdArgs {}

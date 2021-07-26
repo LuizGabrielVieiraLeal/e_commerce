@@ -3,15 +3,15 @@ import { Types } from 'mongoose'
 import {
   Resolver,
   UserRole,
-  UserSignUpInput,
-  UserSignInInput,
-  CategoryCreateInput,
-  CategoryByIdInput,
+  UserSignUpArgs,
+  UserSignInArgs,
+  CategoryCreateArgs,
+  CategoryByIdArgs,
+  CategoryUpdateArgs,
   CategoryDocument,
-  ProductCreateInput,
-  ProductByIdInput,
-  CategoryUpdateInput,
-  ProductUpdateInput,
+  ProductCreateArgs,
+  ProductByIdArgs,
+  ProductUpdateArgs,
   ProductDocument,
   OrderCreateArgs,
   OrderDeleteArgs,
@@ -22,7 +22,7 @@ import { findDocument, findOrderItem, issueToken } from '../utils'
 import { CustomError } from '../errors'
 
 // User
-const signup: Resolver<UserSignUpInput> = async (_, args, { db }) => {
+const signup: Resolver<UserSignUpArgs> = async (_, args, { db }) => {
   const { User } = db
   const { data } = args
 
@@ -39,7 +39,7 @@ const signup: Resolver<UserSignUpInput> = async (_, args, { db }) => {
   return { token, user }
 }
 
-const signin: Resolver<UserSignInInput> = async (_, args, { db }) => {
+const signin: Resolver<UserSignInArgs> = async (_, args, { db }) => {
   const { User } = db
   const { email, password } = args.data
 
@@ -63,7 +63,7 @@ const signin: Resolver<UserSignInInput> = async (_, args, { db }) => {
 }
 
 // Category
-const createCategory: Resolver<CategoryCreateInput> = (_, args, { db }) => {
+const createCategory: Resolver<CategoryCreateArgs> = (_, args, { db }) => {
   const { Category } = db
   const { data } = args
 
@@ -71,7 +71,7 @@ const createCategory: Resolver<CategoryCreateInput> = (_, args, { db }) => {
   return category.save()
 }
 
-const deleteCategory: Resolver<CategoryByIdInput> = async (_, args, { db }) => {
+const deleteCategory: Resolver<CategoryByIdArgs> = async (_, args, { db }) => {
   const { _id } = args
 
   const category = await findDocument<CategoryDocument>({
@@ -84,7 +84,7 @@ const deleteCategory: Resolver<CategoryByIdInput> = async (_, args, { db }) => {
   return category.remove()
 }
 
-const updateCategory: Resolver<CategoryUpdateInput> = async (
+const updateCategory: Resolver<CategoryUpdateArgs> = async (
   _,
   args,
   { db },
@@ -104,7 +104,7 @@ const updateCategory: Resolver<CategoryUpdateInput> = async (
 }
 
 // Product
-const createProduct: Resolver<ProductCreateInput> = (_, args, { db }) => {
+const createProduct: Resolver<ProductCreateArgs> = (_, args, { db }) => {
   const { Product } = db
   const { data } = args
 
@@ -112,7 +112,7 @@ const createProduct: Resolver<ProductCreateInput> = (_, args, { db }) => {
   return product.save()
 }
 
-const deleteProduct: Resolver<ProductByIdInput> = async (_, args, { db }) => {
+const deleteProduct: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
   const { _id } = args
 
   const product = await findDocument<ProductDocument>({
@@ -125,7 +125,7 @@ const deleteProduct: Resolver<ProductByIdInput> = async (_, args, { db }) => {
   return product.remove()
 }
 
-const updateProduct: Resolver<ProductUpdateInput> = async (_, args, { db }) => {
+const updateProduct: Resolver<ProductUpdateArgs> = async (_, args, { db }) => {
   const { data, _id } = args
 
   const product = await findDocument<ProductDocument>({
