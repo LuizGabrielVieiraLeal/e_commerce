@@ -2,6 +2,11 @@ import { Schema, model } from 'mongoose'
 import { ProductDocument } from '../types'
 
 const productSchema = new Schema({
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true,
+  },
   name: {
     type: String,
     required: true,

@@ -1,8 +1,9 @@
 import { Document, Types } from 'mongoose'
-import { OmitId } from '.'
+import { Category, OmitId } from '.'
 
 export interface Product {
   _id: Types.ObjectId
+  category: Category | Types.ObjectId
   name: string
   description: string
   price: number

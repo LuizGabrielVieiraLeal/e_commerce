@@ -59,6 +59,7 @@ enum Unit {
 
 type Product {
   _id: ID!
+  category: Category!
   name: String!
   description: String
   price: Float!
@@ -66,6 +67,7 @@ type Product {
 }
 
 input ProductCreateInput {
+  category: ID!
   name: String!
   description: String
   price: Float!
