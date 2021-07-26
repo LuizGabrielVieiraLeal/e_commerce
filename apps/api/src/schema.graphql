@@ -75,6 +75,7 @@ input ProductCreateInput {
 }
 
 input ProductUpdateInput {
+  category: ID
   name: String
   description: String
   price: Float
