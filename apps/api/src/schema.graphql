@@ -162,12 +162,14 @@ type Query {
 type Mutation {
   signup(data: UserSignUpInput!): AuthPayload!
   signin(data: UserSignInInput!): AuthPayload!
-  createCategory(data: CategoryCreateInput!): Category!
-  deleteCategory(_id: ID!): Category!
+  createCategory(data: CategoryCreateInput!): Category! @auth(role: ADMIN)
+  deleteCategory(_id: ID!): Category! @auth(role: ADMIN)
   updateCategory(data: CategoryUpdateInput!, _id: ID!): Category!
-  createProduct(data: ProductCreateInput!): Product!
-  deleteProduct(_id: ID!): Product!
+    @auth(role: ADMIN)
+  createProduct(data: ProductCreateInput!): Product! @auth(role: ADMIN)
+  deleteProduct(_id: ID!): Product! @auth(role: ADMIN)
   updateProduct(data: ProductUpdateInput!, _id: ID!): Product!
+    @auth(role: ADMIN)
   createOrder(data: OrderCreateInput!): Order! @auth
   deleteOrder(_id: ID!): Order! @auth
   updateOrder(data: OrderUpdateInput!, _id: ID!): Order! @auth
