@@ -1,20 +1,19 @@
 <template>
-  <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+  <q-form class="q-gutter-md">
     <div class="row">
       <div class="col">
-        <q-input outlined v-model="text" label="Nome*" />
+        <q-input outlined label="Nome*" />
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <q-input outlined v-model="text" label="E-mail*" />
+        <q-input outlined label="E-mail*" />
       </div>
     </div>
     <div class="row">
       <div class="col">
         <q-input
           outlined
-          v-model="text"
           label="Celular (Whatsapp)*"
           mask="(##) # #### - ####"
         />
@@ -22,12 +21,12 @@
     </div>
     <div class="row">
       <div class="col">
-        <q-input outlined v-model="text" label="Senha*" />
+        <q-input outlined label="Senha*" />
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <q-input outlined v-model="text" label="Confirme sua senha*" />
+        <q-input outlined label="Confirme sua senha*" />
       </div>
     </div>
     <div class="row">

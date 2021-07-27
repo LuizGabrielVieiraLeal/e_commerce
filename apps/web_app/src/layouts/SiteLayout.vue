@@ -1,21 +1,23 @@
 <template>
   <q-layout>
-    <q-toolbar class="text-primary q-py-sm shadow-3">
-      <q-img
-        :src="require('../assets/app-logo.png')"
-        width="100px"
-        height="50px"
-      />
-      <q-space />
-      <q-btn
-        class="q-mr-md"
-        color="primary"
-        outline
-        label="Criar conta"
-        @click="toggleDialog('signup')"
-      />
-      <q-btn color="primary" label="Entrar" @click="toggleDialog('signin')" />
-    </q-toolbar>
+    <q-header elevated class="bg-white text-primary">
+      <q-toolbar class="q-py-sm">
+        <q-img
+          :src="require('../assets/app-logo.png')"
+          width="100px"
+          height="50px"
+        />
+        <q-space />
+        <q-btn
+          class="q-mr-md"
+          color="primary"
+          outline
+          label="Criar conta"
+          @click="toggleDialog('signup')"
+        />
+        <q-btn color="primary" label="Entrar" @click="toggleDialog('signin')" />
+      </q-toolbar>
+    </q-header>
 
     <q-page-container>
       <router-view />

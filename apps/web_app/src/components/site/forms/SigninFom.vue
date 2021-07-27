@@ -1,18 +1,19 @@
 <template>
-  <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+  <q-form @submit="onSubmit" class="q-gutter-md">
     <div class="row">
       <div class="col">
-        <q-input outlined v-model="text" label="E-mail*" />
+        <q-input outlined label="E-mail*" />
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <q-input outlined v-model="text" label="Senha*" />
+        <q-input outlined label="Senha*" />
       </div>
     </div>
     <div class="row">
       <div class="col">
         <q-btn
+          :loading="loading"
           class="full-width"
           label="Entrar"
           type="submit"
@@ -24,5 +25,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data: () => ({
+    loading: false
+  }),
+  methods: {
+    onSubmit() {
+      this.loading = true;
+
+      setTimeout(() => {
+        this.$router.push("/user/");
+      }, 2000);
+    }
+  }
+};
 </script>
