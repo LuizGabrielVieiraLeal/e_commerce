@@ -48,14 +48,6 @@
     </q-drawer>
 
     <q-page-container class="q-pa-lg">
-      <div class="row justify-end q-mt-lg q-pl-lg">
-        <q-breadcrumbs>
-          <q-breadcrumbs-el label="Home" icon="home" />
-          <q-breadcrumbs-el label="Components" icon="widgets" />
-          <q-breadcrumbs-el label="Breadcrumbs" />
-        </q-breadcrumbs>
-      </div>
-
       <router-view />
     </q-page-container>
   </q-layout>
