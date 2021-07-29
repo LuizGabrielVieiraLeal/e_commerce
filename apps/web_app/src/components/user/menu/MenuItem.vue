@@ -2,12 +2,18 @@
   <q-card class="q-mb-sm">
     <div class="row">
       <div class="col-xs-12 col-md-2">
-        <q-img :src="this.product.image" :ratio="4 / 3" />
+        <q-img
+          :src="
+            this.product.image ||
+              'https://www.corsan.com.br/themes/padrao2019/images/outros/GD_imgSemImagem.png'
+          "
+          :ratio="4 / 3"
+        />
       </div>
       <div class="col-xs-12 col-md-10">
         <q-card-section>
           <div class="row">
-            <div class="col-xs-11">
+            <div class="col-xs-9">
               <div class="text-h6">{{ this.product.name }}</div>
               <div class="text-subtitle2">
                 R$
@@ -17,16 +23,16 @@
                     .toString()
                     .replace(".", ",")
                 }}
-                ({{ unity }})
+                ({{ unit }})
               </div>
               <div class="row">
                 <div class="col-xs-10">
-                  <p class="q-mt-md">{{ this.product.description }}</p>
+                  <p class="q-mt-xl">{{ this.product.description }}</p>
                 </div>
               </div>
             </div>
-            <div class="col-xs-1">
-              <div class="row justify-center">
+            <div class="col-xs-3">
+              <div class="row justify-center q-mt-sm">
                 <p class="text-bold">Quantidade</p>
               </div>
               <div class="row justify-center">
@@ -38,7 +44,7 @@
                   size="xs"
                   color="primary"
                   icon="chevron_left"
-                  class="q-mr-sm"
+                  class="q-mr-md"
                 />
                 <q-btn round size="xs" color="primary" icon="chevron_right" />
               </div>
@@ -62,9 +68,9 @@ export default {
     quantity: 0
   }),
   computed: {
-    unity: {
+    unit: {
       get: function() {
-        switch (this.product.unity) {
+        switch (this.product.unit) {
           case "UN":
             return "unidade";
           default:
