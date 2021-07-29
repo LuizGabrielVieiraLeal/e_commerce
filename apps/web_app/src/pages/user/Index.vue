@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import OrderCarousel from "../../components/shared/order_carousel/OrderCarousel.vue";
-import MenuTabs from "../../components/user/MenuTabs.vue";
+import OrderCarousel from "../../components/user/order_carousel/OrderCarousel.vue";
+import MenuTabs from "../../components/user/menu/MenuTabs.vue";
 
 export default {
   components: {

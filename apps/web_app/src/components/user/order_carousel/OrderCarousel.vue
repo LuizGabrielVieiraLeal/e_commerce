@@ -26,8 +26,8 @@
                 </span>
               </div>
               <div class="col-xs-9">
-                <div class="text-h6">
-                  Cód: <span class="text-primary">#6k78ds</span>
+                <div>
+                  Cód: <span class="text-primary text-bold">#6k78ds</span>
                 </div>
                 <div class="text-subtitle2">R$ 30,00</div>
               </div>
@@ -51,8 +51,8 @@
                 </span>
               </div>
               <div class="col-xs-9">
-                <div class="text-h6">
-                  Cód: <span class="text-primary">#6k78ds</span>
+                <div>
+                  Cód: <span class="text-primary text-bold">#6k78ds</span>
                 </div>
                 <div class="text-subtitle2">R$ 30,00</div>
               </div>
@@ -76,8 +76,8 @@
                 </span>
               </div>
               <div class="col-xs-9">
-                <div class="text-h6">
-                  Cód: <span class="text-primary">#6k78ds</span>
+                <div>
+                  Cód: <span class="text-primary text-bold">#6k78ds</span>
                 </div>
                 <div class="text-subtitle2">R$ 30,00</div>
               </div>
@@ -101,8 +101,8 @@
                 </span>
               </div>
               <div class="col-xs-9">
-                <div class="text-h6">
-                  Cód: <span class="text-primary">#6k78ds</span>
+                <div>
+                  Cód: <span class="text-primary text-bold">#6k78ds</span>
                 </div>
                 <div class="text-subtitle2">R$ 30,00</div>
               </div>
@@ -132,8 +132,8 @@
                 </span>
               </div>
               <div class="col-xs-9">
-                <div class="text-h6">
-                  Cód: <span class="text-primary">#6k78ds</span>
+                <div>
+                  Cód: <span class="text-primary text-bold">#6k78ds</span>
                 </div>
                 <div class="text-subtitle2">R$ 30,00</div>
               </div>
@@ -157,8 +157,8 @@
                 </span>
               </div>
               <div class="col-xs-9">
-                <div class="text-h6">
-                  Cód: <span class="text-primary">#6k78ds</span>
+                <div>
+                  Cód: <span class="text-primary text-bold">#6k78ds</span>
                 </div>
                 <div class="text-subtitle2">R$ 30,00</div>
               </div>
@@ -182,8 +182,8 @@
                 </span>
               </div>
               <div class="col-xs-9">
-                <div class="text-h6">
-                  Cód: <span class="text-primary">#6k78ds</span>
+                <div>
+                  Cód: <span class="text-primary text-bold">#6k78ds</span>
                 </div>
                 <div class="text-subtitle2">R$ 30,00</div>
               </div>
@@ -207,8 +207,8 @@
                 </span>
               </div>
               <div class="col-xs-9">
-                <div class="text-h6">
-                  Cód: <span class="text-primary">#6k78ds</span>
+                <div>
+                  Cód: <span class="text-primary text-bold">#6k78ds</span>
                 </div>
                 <div class="text-subtitle2">R$ 30,00</div>
               </div>
@@ -232,8 +232,8 @@
                 </span>
               </div>
               <div class="col-xs-9">
-                <div class="text-h6">
-                  Cód: <span class="text-primary">#6k78ds</span>
+                <div>
+                  Cód: <span class="text-primary text-bold">#6k78ds</span>
                 </div>
                 <div class="text-subtitle2">R$ 30,00</div>
               </div>
