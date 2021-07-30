@@ -76,8 +76,8 @@
 </template>
 
 <script>
-import SigninForm from "../components/site/forms/SigninFom.vue";
-import SignupForm from "../components/site/forms/SignupForm.vue";
+import SigninForm from "../components/shared/forms/SigninFom.vue";
+import SignupForm from "../components/user/forms/SignupForm.vue";
 
 export default {
   components: {

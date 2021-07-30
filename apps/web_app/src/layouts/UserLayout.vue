@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 const menuList = [
   {
     icon: "home",
@@ -81,6 +83,9 @@ export default {
   data: () => ({
     drawer: true,
     menuList
-  })
+  }),
+  computed: {
+    ...mapGetters("user", ["currentUser"])
+  }
 };
 </script>
