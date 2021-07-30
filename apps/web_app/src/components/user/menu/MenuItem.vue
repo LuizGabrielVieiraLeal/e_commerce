@@ -40,6 +40,7 @@
               </div>
               <div class="row justify-center q-mt-md">
                 <q-btn
+                  :disabled="quantity <= 0"
                   round
                   size="xs"
                   color="primary"

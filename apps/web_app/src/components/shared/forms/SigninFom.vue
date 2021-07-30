@@ -4,6 +4,7 @@
       <div class="col">
         <q-input
           outlined
+          type="email"
           label="E-mail*"
           v-model="credentials.email"
           required

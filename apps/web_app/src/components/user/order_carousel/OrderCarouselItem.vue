@@ -9,7 +9,9 @@
           </span>
         </div>
         <div class="col-xs-9">
-          <div>Cód: <span class="text-primary text-bold">#6k78ds</span></div>
+          <div>
+            Código: <span class="text-primary text-bold">#6k78ds123asdf</span>
+          </div>
           <div class="text-subtitle2">R$ 30,00</div>
         </div>
       </div>
