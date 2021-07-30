@@ -52,6 +52,7 @@ export default {
           }
         }
       `,
+      fetchPolicy: "cache-first",
       result({ data, loading, networkStatus }) {
         this.tab = data.categories[0]["_id"];
       }
@@ -71,7 +72,8 @@ export default {
             unit
           }
         }
-      `
+      `,
+      fetchPolicy: "cache-first"
     }
   },
   data: () => ({
