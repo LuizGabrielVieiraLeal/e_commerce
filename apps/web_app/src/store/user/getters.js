@@ -7,5 +7,8 @@ export function currentUser(state) {
 }
 
 export function isUserAuthenticated(state) {
-  return state.currentUser.role === "USER";
+  return (
+    state.token === localStorage.getItem("apollo-token") &&
+    state.currentUser.role === "USER"
+  );
 }

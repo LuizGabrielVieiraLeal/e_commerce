@@ -1,4 +1,6 @@
 export function setCurrentUser(state, { token, user }) {
-  state.token = `Bearer ${token}`;
+  token = `Bearer ${token}`;
+  localStorage.setItem("apollo-token", token);
+  state.token = token;
   state.currentUser = user;
 }
