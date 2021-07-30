@@ -1,6 +1,7 @@
 import {
   Resolver,
   UserRole,
+  PaginationArgs,
   CategoryByIdArgs,
   ProductDocument,
   ProductByIdArgs,
@@ -8,7 +9,7 @@ import {
   OrderByIdArgs,
   CategoryDocument,
 } from '../types'
-import { findDocument } from '../utils'
+import { findDocument, paginateAndSort } from '../utils'
 
 // Category
 const categories: Resolver<Record<string, unknown>> = (_, args, { db }) =>
@@ -26,8 +27,8 @@ const category: Resolver<CategoryByIdArgs> = async (_, args, { db }) => {
 }
 
 // Product
-const products: Resolver<Record<string, unknown>> = (_, args, { db }) =>
-  db.Product.find()
+const products: Resolver<PaginationArgs> = (_, args, { db }) =>
+  paginateAndSort(db.Product.find(), args)
 
 const product: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
   const { _id } = args
@@ -41,17 +42,13 @@ const product: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
 }
 
 // Order
-const orders: Resolver<Record<string, unknown>> = (
-  _,
-  args,
-  { db, authUser },
-) => {
+const orders: Resolver<PaginationArgs> = (_, args, { db, authUser }) => {
   const { Order } = db
   const { _id, role } = authUser
 
   const conditions = role === UserRole.USER ? { owner: _id } : {}
 
-  return Order.find(conditions)
+  return paginateAndSort(Order.find(conditions), args)
 }
 
 const order: Resolver<OrderByIdArgs> = async (_, args, { db, authUser }) => {

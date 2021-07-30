@@ -60,7 +60,7 @@ export default {
     products: {
       query: gql`
         query {
-          products {
+          products(orderBy: [price_ASC, name_ASC]) {
             _id
             category {
               _id
