@@ -18,7 +18,9 @@
         />
         <q-space />
         <q-btn class="q-mr-md" round color="primary" icon="shopping_basket">
-          <q-badge color="green" floating>2</q-badge>
+          <q-badge v-if="orderItems.length > 0" color="green" floating>{{
+            orderItems.length
+          }}</q-badge>
         </q-btn>
         <q-btn class="q-mr-md" round color="primary" icon="account_circle">
           <q-menu>
@@ -47,6 +49,14 @@
               </q-item-section>
               <q-item-section>
                 {{ menuItem.label }}
+                <q-space />
+                <q-badge
+                  v-if="orderItems.length > 0 && menuItem.label === 'Sacola'"
+                  class="q-mt-md"
+                  color="green"
+                  floating
+                  >{{ orderItems.length }}</q-badge
+                >
               </q-item-section>
             </q-item>
             <q-separator :key="'sep' + index" v-if="menuItem.separator" />
@@ -58,6 +68,34 @@
     <q-page-container class="q-pa-lg">
       <router-view />
     </q-page-container>
+
+    <q-dialog v-model="cartDialog" position="bottom" seamless>
+      <q-card style="width: 265px">
+        <q-card-section>
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="row justify-center">
+                <q-icon name="shopping_basket" color="primary" size="xl" />
+              </div>
+            </div>
+            <div class="col-xs-8 q-px-lg">
+              <div class="text-weight-bold">
+                R$
+                {{
+                  total
+                    .toFixed(2)
+                    .toString()
+                    .replace(".", ",")
+                }}
+              </div>
+              <div class="text-grey">
+                {{ orderItems.length }} itens na sacola
+              </div>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-layout>
 </template>
 
@@ -88,7 +126,13 @@ export default {
     menuList
   }),
   computed: {
-    ...mapGetters("user", ["currentUser"])
+    cartDialog: {
+      get: function() {
+        return this.orderItems.length > 0;
+      }
+    },
+    ...mapGetters("user", ["currentUser"]),
+    ...mapGetters("cart", ["orderItems", "total"])
   },
   methods: {
     logout() {

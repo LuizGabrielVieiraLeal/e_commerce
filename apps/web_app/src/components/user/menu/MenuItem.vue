@@ -40,6 +40,7 @@
               </div>
               <div class="row justify-center q-mt-md">
                 <q-btn
+                  @click="decrement"
                   :disabled="quantity <= 0"
                   round
                   size="xs"
@@ -47,7 +48,13 @@
                   icon="chevron_left"
                   class="q-mr-md"
                 />
-                <q-btn round size="xs" color="primary" icon="chevron_right" />
+                <q-btn
+                  @click="increment"
+                  round
+                  size="xs"
+                  color="primary"
+                  icon="chevron_right"
+                />
               </div>
             </div>
           </div>
@@ -58,6 +65,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   props: {
     product: {
@@ -79,6 +88,34 @@ export default {
         }
       }
     }
+  },
+
+  methods: {
+    increment() {
+      this.quantity++;
+
+      const item = {
+        product: this.product._id,
+        quantity: this.quantity,
+        total: this.product.price * this.quantity
+      };
+
+      this.updateCartItems(item);
+    },
+
+    decrement() {
+      this.quantity--;
+
+      const item = {
+        product: this.product._id,
+        quantity: this.quantity,
+        total: this.product.price * this.quantity
+      };
+
+      this.updateCartItems(item);
+    },
+
+    ...mapActions("cart", ["updateCartItems"])
   }
 };
 </script>
