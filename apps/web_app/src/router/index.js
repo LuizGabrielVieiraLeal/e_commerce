@@ -27,7 +27,7 @@ export default function({ store }) {
   });
 
   Router.beforeEach((to, from, next) => {
-    if (to.path === "/user") {
+    if (to.path.match(/user/)) {
       if (store.getters["user/isUserAuthenticated"]) next();
       else next("/");
     }

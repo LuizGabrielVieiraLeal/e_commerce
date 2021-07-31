@@ -9,6 +9,7 @@ export interface User {
   _id: Types.ObjectId
   name: string
   email: string
+  phone: string
   password: string
   role: UserRole
 }
@@ -28,7 +29,7 @@ interface UserSignInInput {
 }
 
 export interface UserSignUpArgs {
-  data: UserSignInInput & { name: string }
+  data: UserSignInInput & { name: string } & { phone: string }
 }
 
 export interface UserSignInArgs {

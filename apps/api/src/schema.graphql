@@ -12,6 +12,7 @@ type User {
   _id: ID!
   name: String!
   email: String!
+  phone: String!
   role: UserRole!
 }
 
@@ -23,6 +24,7 @@ type AuthPayload {
 input UserSignUpInput {
   name: String!
   email: String!
+  phone: String!
   password: String!
 }
 

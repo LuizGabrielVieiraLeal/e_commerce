@@ -20,7 +20,15 @@
         <q-btn class="q-mr-md" round color="primary" icon="shopping_basket">
           <q-badge color="green" floating>2</q-badge>
         </q-btn>
-        <q-btn class="q-mr-md" round color="primary" icon="account_circle" />
+        <q-btn class="q-mr-md" round color="primary" icon="account_circle">
+          <q-menu>
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup @click="logout">
+                <q-item-section>Sair</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -54,7 +62,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 const menuList = [
   {
@@ -71,11 +79,6 @@ const menuList = [
     icon: "list_alt",
     label: "Pedidos",
     separator: false
-  },
-  {
-    icon: "exit_to_app",
-    label: "Sair",
-    separator: false
   }
 ];
 
@@ -86,6 +89,14 @@ export default {
   }),
   computed: {
     ...mapGetters("user", ["currentUser"])
+  },
+  methods: {
+    logout() {
+      this.signout();
+      this.$router.push("/");
+    },
+
+    ...mapActions("user", ["signout"])
   }
 };
 </script>

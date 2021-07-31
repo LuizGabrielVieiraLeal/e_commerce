@@ -62,6 +62,7 @@ export default {
                   _id
                   name
                   email
+                  phone
                   role
                 }
               }
