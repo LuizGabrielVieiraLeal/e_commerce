@@ -45,7 +45,7 @@
                   round
                   size="xs"
                   color="primary"
-                  icon="chevron_left"
+                  icon="remove"
                   class="q-mr-md"
                 />
                 <q-btn
@@ -53,7 +53,7 @@
                   round
                   size="xs"
                   color="primary"
-                  icon="chevron_right"
+                  icon="add"
                 />
               </div>
             </div>
