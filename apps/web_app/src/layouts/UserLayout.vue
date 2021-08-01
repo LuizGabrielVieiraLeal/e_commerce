@@ -17,14 +17,13 @@
           height="50px"
         />
         <q-space />
-        <q-btn class="q-mr-md" round color="primary" icon="shopping_basket">
-          <q-badge v-if="orderItems.length > 0" color="green" floating>{{
-            orderItems.length
-          }}</q-badge>
-        </q-btn>
         <q-btn class="q-mr-md" round color="primary" icon="account_circle">
           <q-menu>
             <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup>
+                <q-item-section>Configurações</q-item-section>
+              </q-item>
+              <q-separator />
               <q-item clickable v-close-popup @click="logout">
                 <q-item-section>Sair</q-item-section>
               </q-item>
@@ -38,24 +37,21 @@
       <q-scroll-area class="fit">
         <q-list class="q-pa-md">
           <template v-for="(menuItem, index) in menuList">
-            <q-item
-              :key="index"
-              clickable
-              :active="menuItem.label === 'Início'"
-              v-ripple
-            >
+            <q-item :key="index" clickable v-ripple :to="menuItem.path">
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
               <q-item-section>
                 {{ menuItem.label }}
-                <q-space />
+              </q-item-section>
+              <q-item-section side>
                 <q-badge
-                  v-if="orderItems.length > 0 && menuItem.label === 'Sacola'"
-                  class="q-mt-md"
+                  v-if="totalItems > 0 && menuItem.label === 'Sacola'"
+                  class="q-mt-md q-mr-lg"
+                  style="margin-top:21px;"
                   color="green"
                   floating
-                  >{{ orderItems.length }}</q-badge
+                  >{{ totalItems }}</q-badge
                 >
               </q-item-section>
             </q-item>
@@ -75,10 +71,20 @@
           <div class="row">
             <div class="col-xs-3">
               <div class="row justify-center">
-                <q-icon name="shopping_basket" color="primary" size="xl" />
+                <q-btn
+                  class="q-mr-md"
+                  round
+                  color="primary"
+                  icon="shopping_basket"
+                  to="/user/cart"
+                >
+                  <q-badge v-if="totalItems > 0" color="green" floating>{{
+                    totalItems
+                  }}</q-badge>
+                </q-btn>
               </div>
             </div>
-            <div class="col-xs-8 q-px-lg">
+            <div class="col-xs-9 q-px-lg">
               <div class="text-weight-bold">
                 R$
                 {{
@@ -88,9 +94,7 @@
                     .replace(".", ",")
                 }}
               </div>
-              <div class="text-grey">
-                {{ orderItems.length }} itens na sacola
-              </div>
+              <div class="text-grey">{{ totalItems }} itens na sacola</div>
             </div>
           </div>
         </q-card-section>
@@ -106,17 +110,20 @@ const menuList = [
   {
     icon: "home",
     label: "Início",
-    separator: false
+    separator: false,
+    path: "/user/home"
   },
   {
     icon: "shopping_basket",
     label: "Sacola",
-    separator: false
+    separator: false,
+    path: "/user/cart"
   },
   {
     icon: "list_alt",
     label: "Pedidos",
-    separator: false
+    separator: false,
+    path: "/user/orders"
   }
 ];
 
@@ -128,11 +135,11 @@ export default {
   computed: {
     cartDialog: {
       get: function() {
-        return this.orderItems.length > 0;
+        return this.totalItems > 0;
       }
     },
     ...mapGetters("user", ["currentUser"]),
-    ...mapGetters("cart", ["orderItems", "total"])
+    ...mapGetters("cart", ["totalItems", "total"])
   },
   methods: {
     logout() {

@@ -36,6 +36,7 @@
 
 <script>
 import gql from "graphql-tag";
+import { mapActions } from "vuex";
 import MenuItem from "./MenuItem.vue";
 
 export default {
@@ -55,6 +56,7 @@ export default {
       fetchPolicy: "cache-first",
       result({ data, loading, networkStatus }) {
         this.tab = data.categories[0]["_id"];
+        this.storeCategories(data.categories);
       }
     },
     products: {
@@ -73,19 +75,19 @@ export default {
           }
         }
       `,
-      fetchPolicy: "cache-first"
+      fetchPolicy: "cache-first",
+      result({ data, loading, networkStatus }) {
+        this.storeProducts(data.products);
+      }
     }
   },
   data: () => ({
     tab: "",
     categories: []
-  })
+  }),
+  methods: {
+    ...mapActions("categories", ["storeCategories"]),
+    ...mapActions("products", ["storeProducts"])
+  }
 };
 </script>
-
-<style lang="css">
-.quantity-counter {
-  font-size: 30px;
-  font-weight: bolder;
-}
-</style>

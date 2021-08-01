@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-mb-sm">
+  <q-card class="q-mb-sm menu-item-card">
     <div class="row">
       <div class="col-xs-12 col-md-2">
         <q-img
@@ -13,7 +13,7 @@
       <div class="col-xs-12 col-md-10">
         <q-card-section>
           <div class="row">
-            <div class="col-xs-9">
+            <div class="col-xs-6">
               <div class="text-h6">{{ this.product.name }}</div>
               <div class="text-subtitle2">
                 R$
@@ -31,14 +31,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-xs-3">
-              <div class="row justify-center q-mt-sm">
-                <p class="text-bold">Quantidade</p>
-              </div>
-              <div class="row justify-center">
-                <span class="quantity-counter">{{ quantity }}</span>
-              </div>
-              <div class="row justify-center q-mt-md">
+            <div class="col-xs-6 row justify-end content-center q-pr-md">
+              <div>
                 <q-btn
                   @click="decrement"
                   :disabled="quantity <= 0"
@@ -46,14 +40,20 @@
                   size="xs"
                   color="primary"
                   icon="remove"
-                  class="q-mr-md"
+                  class="q-mr-md q-mt-md"
                 />
+              </div>
+              <div class="q-mt-xs">
+                <span class="quantity-counter">{{ quantity }}</span>
+              </div>
+              <div>
                 <q-btn
                   @click="increment"
                   round
                   size="xs"
                   color="primary"
                   icon="add"
+                  class="q-ml-md q-mt-md"
                 />
               </div>
             </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   props: {
@@ -87,12 +87,30 @@ export default {
             return null;
         }
       }
-    }
-  },
+    },
 
+    ...mapGetters("cart", ["orderItems"])
+  },
+  mounted: function() {
+    console.log(this.orderItems);
+    this.orderItems.forEach(orderItem => {
+      if (orderItem.product === this.product._id)
+        this.quantity = orderItem.quantity;
+    });
+  },
   methods: {
     increment() {
-      this.quantity++;
+      switch (this.product.unit) {
+        case "KG":
+        case "GR":
+        case "LT":
+        case "M":
+          this.quantity += 0.5;
+          break;
+        default:
+          this.quantity++;
+          break;
+      }
 
       const item = {
         product: this.product._id,
@@ -119,3 +137,10 @@ export default {
   }
 };
 </script>
+
+<style lang="css" scoped>
+.quantity-counter {
+  font-size: 30px;
+  font-weight: bolder;
+}
+</style>

@@ -117,7 +117,7 @@ export default {
 
           this.authenticate(data);
 
-          if (data.user.role === "USER") this.$router.push("/user");
+          if (data.user.role === "USER") this.$router.push("/user/home");
         })
         .catch(error => {
           console.log(error);
