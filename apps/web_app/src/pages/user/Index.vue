@@ -24,17 +24,20 @@
     </div>
 
     <menu-tabs />
+    <bottom-sheet />
   </q-page>
 </template>
 
 <script>
 import OrderCarousel from "../../components/user/order_carousel/OrderCarousel.vue";
 import MenuTabs from "../../components/user/menu/MenuTabs.vue";
+import BottomSheet from "../../components/user/cart/BottomSheet.vue";
 
 export default {
   components: {
     OrderCarousel,
-    MenuTabs
+    MenuTabs,
+    BottomSheet
   }
 };
 </script>

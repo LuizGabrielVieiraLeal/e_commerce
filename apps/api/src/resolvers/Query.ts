@@ -27,8 +27,10 @@ const category: Resolver<CategoryByIdArgs> = async (_, args, { db }) => {
 }
 
 // Product
-const products: Resolver<PaginationArgs> = (_, args, { db }) =>
-  paginateAndSort(db.Product.find(), args)
+const products: Resolver<PaginationArgs> = (_, args, { db }) => {
+  const { Product } = db
+  return paginateAndSort(Product.find(), args)
+}
 
 const product: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
   const { _id } = args
