@@ -62,7 +62,14 @@
     </q-drawer>
 
     <q-page-container class="q-pa-lg">
-      <router-view />
+      <transition
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+        appear
+        :duration="300"
+      >
+        <router-view />
+      </transition>
     </q-page-container>
 
     <q-dialog v-model="cartDialog" position="bottom" seamless>
@@ -88,7 +95,7 @@
               <div class="text-weight-bold">
                 R$
                 {{
-                  total
+                  totalPrice
                     .toFixed(2)
                     .toString()
                     .replace(".", ",")
@@ -139,7 +146,7 @@ export default {
       }
     },
     ...mapGetters("user", ["currentUser"]),
-    ...mapGetters("cart", ["totalItems", "total"])
+    ...mapGetters("cart", ["totalItems", "totalPrice"])
   },
   methods: {
     logout() {

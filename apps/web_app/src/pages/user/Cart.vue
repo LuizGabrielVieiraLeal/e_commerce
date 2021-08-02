@@ -22,29 +22,31 @@
             :done="step > 1"
             class="order-step"
           >
-            For each ad campaign that you create, you can control how much
-            you're willing to spend on clicks and conversions, which networks
-            and geographical locations you want your ads to show on, and more.
+            <address-banner />
+            <q-separator class="q-mt-lg" />
+            <subtotal-list />
+            <q-separator />
+            <q-item-label header>
+              Taxa de entrega: R$ 2,00
+            </q-item-label>
+            <q-separator />
+            <q-item-label header class="text-bold">
+              Total: R$
+              {{
+                (totalPrice + deliveryRating)
+                  .toFixed(2)
+                  .toString()
+                  .replace(".", ",")
+              }}
+            </q-item-label>
           </q-step>
 
           <q-step
             :name="2"
-            title="Endereço de entrega"
-            icon="room"
-            active-icon="room"
-            :done="step > 2"
-            class="order-step"
-          >
-            An ad group contains one or more ads which target a shared set of
-            keywords.
-          </q-step>
-
-          <q-step
-            :name="3"
-            title="Detalhes de pagamento"
+            title="Pagamento"
             icon="monetization_on"
             active-icon="monetization_on"
-            :done="step > 3"
+            :done="step > 2"
             class="order-step"
           >
             An ad group contains one or more ads which target a shared set of
@@ -76,15 +78,28 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+import AddressBanner from "../../components/user/cart/AddressBanner.vue";
+import SubtotalList from "../../components/user/cart/SubtotalList.vue";
+
 export default {
+  components: {
+    AddressBanner,
+    SubtotalList
+  },
   data: () => ({
-    step: 1
-  })
+    step: 1,
+    deliveryRating: 2
+  }),
+  computed: {
+    ...mapGetters("cart", ["totalPrice"])
+  }
 };
 </script>
 
 <style lang="css" scoped>
 .order-step {
-  min-height: 67vh;
+  min-height: 65vh;
 }
 </style>

@@ -9,6 +9,6 @@ export function totalItems(state) {
   );
 }
 
-export function total(state) {
+export function totalPrice(state) {
   return state.orderItems.reduce((sum, orderItem) => sum + orderItem.total, 0);
 }

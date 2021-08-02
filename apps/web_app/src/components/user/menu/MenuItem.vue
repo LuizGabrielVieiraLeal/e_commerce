@@ -89,10 +89,25 @@ export default {
       }
     },
 
+    step: {
+      get: function() {
+        switch (this.product.unit) {
+          case "KG":
+          case "GR":
+          case "LT":
+          case "M":
+            return 0.5;
+            break;
+          default:
+            return 1;
+            break;
+        }
+      }
+    },
+
     ...mapGetters("cart", ["orderItems"])
   },
   mounted: function() {
-    console.log(this.orderItems);
     this.orderItems.forEach(orderItem => {
       if (orderItem.product === this.product._id)
         this.quantity = orderItem.quantity;
@@ -100,17 +115,7 @@ export default {
   },
   methods: {
     increment() {
-      switch (this.product.unit) {
-        case "KG":
-        case "GR":
-        case "LT":
-        case "M":
-          this.quantity += 0.5;
-          break;
-        default:
-          this.quantity++;
-          break;
-      }
+      this.quantity += this.step;
 
       const item = {
         product: this.product._id,
@@ -122,7 +127,7 @@ export default {
     },
 
     decrement() {
-      this.quantity--;
+      this.quantity -= this.step;
 
       const item = {
         product: this.product._id,

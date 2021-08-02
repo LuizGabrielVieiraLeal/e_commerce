@@ -112,7 +112,6 @@ export default {
           }
         })
         .then(response => {
-          console.log(response);
           let data = response.data.signup;
 
           this.authenticate(data);
@@ -121,6 +120,9 @@ export default {
         })
         .catch(error => {
           console.log(error);
+          this.$q.notify(
+            "Não foi possível cadastrar um novo usuário com este e-mail, por favor forneça outro e-mail para continuar com o cadastro."
+          );
         });
 
       this.loading = false;
