@@ -166,10 +166,10 @@ enum OrderOrderByInput {
 }
 
 input OrderWhereInput {
-  userEq: ID
-  userNe: ID
-  userIn: [ID!]
-  userNin: [ID!]
+  ownerEq: ID
+  ownerNe: ID
+  ownerIn: [ID!]
+  ownerNin: [ID!]
   totalEq: Float
   totalNe: Float
   totalIn: [Float!]

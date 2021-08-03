@@ -107,8 +107,24 @@ const operators = [
   { name: 'Options', op: '$options' },
 ]
 
-const buildConditions = (where: Record<string, any>): Record<string, any> =>
+const idFields = ['owner']
+
+const buildConditions = (
+  where: Record<string, any> = {},
+): Record<string, any> =>
   Object.keys(where).reduce((conditions, whereKey) => {
+    if (idFields.some(idField => whereKey.includes(idField))) {
+      const ids: string[] = Array.isArray(where[whereKey])
+        ? where[whereKey]
+        : [where[whereKey]]
+
+      if (ids.some(id => !isMongoId(id)))
+        throw new CustomError(
+          `Invalid ID value for condition '${whereKey}'!`,
+          'INVALID_ID_ERROR',
+        )
+    }
+
     const operator = operators.find(({ name }) => {
       return new RegExp(`${name}$`).test(whereKey)
     })

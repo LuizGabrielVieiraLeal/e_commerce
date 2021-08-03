@@ -9,7 +9,7 @@ import {
   OrderByIdArgs,
   CategoryDocument,
 } from '../types'
-import { findDocument, paginateAndSort } from '../utils'
+import { buildConditions, findDocument, paginateAndSort } from '../utils'
 
 // Category
 const categories: Resolver<Record<string, unknown>> = (_, args, { db }) =>
@@ -29,7 +29,9 @@ const category: Resolver<CategoryByIdArgs> = async (_, args, { db }) => {
 // Product
 const products: Resolver<PaginationArgs> = (_, args, { db }) => {
   const { Product } = db
-  return paginateAndSort(Product.find(), args)
+  const conditions = buildConditions(args.where)
+
+  return paginateAndSort(Product.find(conditions), args)
 }
 
 const product: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
@@ -47,8 +49,10 @@ const product: Resolver<ProductByIdArgs> = async (_, args, { db }) => {
 const orders: Resolver<PaginationArgs> = (_, args, { db, authUser }) => {
   const { Order } = db
   const { _id, role } = authUser
+  let conditions = buildConditions(args.where)
 
-  const conditions = role === UserRole.USER ? { owner: _id } : {}
+  conditions =
+    role === UserRole.USER ? { ...conditions, owner: _id } : conditions
 
   return paginateAndSort(Order.find(conditions), args)
 }
