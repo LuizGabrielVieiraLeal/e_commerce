@@ -12,3 +12,15 @@ export function totalItems(state) {
 export function totalPrice(state) {
   return state.orderItems.reduce((sum, orderItem) => sum + orderItem.total, 0);
 }
+
+export function paymentMethod(state) {
+  return state.paymentMethod;
+}
+
+export function changeFor(state) {
+  return state.changeFor;
+}
+
+export function change(state) {
+  return state.change;
+}

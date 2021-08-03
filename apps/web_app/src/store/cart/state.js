@@ -1,5 +1,8 @@
 export default function() {
   return {
-    orderItems: []
+    orderItems: [],
+    paymentMethod: null,
+    changeFor: null,
+    change: null
   };
 }

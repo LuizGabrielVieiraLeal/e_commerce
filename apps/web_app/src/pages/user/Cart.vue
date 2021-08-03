@@ -23,9 +23,13 @@
             class="order-step"
           >
             <address-banner />
+
             <q-separator class="q-mt-lg" />
+
             <subtotal-list />
+
             <q-separator />
+
             <q-item-label header>
               Taxa de entrega: R$
               {{
@@ -35,7 +39,9 @@
                   .replace(".", ",")
               }}
             </q-item-label>
+
             <q-separator />
+
             <q-item-label header class="text-bold">
               Total: R$
               {{
@@ -55,39 +61,12 @@
             :done="step > 2"
             class="order-step"
           >
-            <q-item-label header>
-              Escolha a forma de pagamento
-            </q-item-label>
+            <payment-method-selection />
 
-            <q-radio
-              class="q-ml-xs q-mr-md"
-              v-model="paymentMethod"
-              val="CASH"
-              label="Dinheiro"
-            />
-            <q-radio
-              v-model="paymentMethod"
-              val="CREDIT_CARD"
-              label="Cartão de crédito"
-            />
+            <payment-description />
 
-            <q-item-label header>
-              Descrição do pagamento
-            </q-item-label>
-
-            <template v-for="orderItem in orderItems">
-              <p :key="orderItem.product" class="q-my-none q-mx-md text-bold">
-                {{
-                  `${orderItem.quantity} ${getProductName(
-                    orderItem.product
-                  )}: R$ ${orderItem.total
-                    .toFixed(2)
-                    .toString()
-                    .replace(".", ",")}`
-                }}
-              </p>
-            </template>
             <q-separator class="q-my-md" />
+
             <p class="q-my-none q-mx-md text-bold">
               Taxa de entrega: R$
               {{
@@ -97,7 +76,9 @@
                   .replace(".", ",")
               }}
             </p>
+
             <q-separator class="q-my-md" />
+
             <p class="q-my-none q-mx-md text-bold">
               Total: R$
               {{
@@ -110,6 +91,7 @@
 
             <template v-if="changeFor && change > 0">
               <q-separator class="q-my-md" />
+
               <span class="q-my-none q-mx-md">
                 Troco para: R$
                 {{
@@ -119,6 +101,7 @@
                     .replace(".", ",")
                 }}
               </span>
+
               <q-btn
                 flat
                 dense
@@ -128,22 +111,15 @@
                 label="Alterar"
                 @click="changeDialog = true"
               />
-              <br />
-              <span class="q-my-none q-mx-md">
-                Troco à receber: R$
-                {{
-                  change
-                    .toFixed(2)
-                    .toString()
-                    .replace(".", ",")
-                }}
-              </span>
             </template>
+
             <template v-if="paymentMethod === 'CASH' && !changeFor">
               <q-separator class="q-my-md" />
+
               <span class="q-my-none q-mx-md">
                 Não preciso de troco
               </span>
+
               <q-btn
                 flat
                 dense
@@ -153,7 +129,6 @@
                 label="Alterar"
                 @click="changeDialog = true"
               />
-              <br />
             </template>
           </q-step>
 
@@ -167,6 +142,7 @@
                 label="Voltar"
                 class="q-mr-sm"
               />
+
               <q-btn
                 v-if="step < 3"
                 @click="$refs.stepper.next()"
@@ -194,6 +170,7 @@
             v-model="changeForLabel"
             autofocus
             @keyup.enter="changeDialog = false"
+            input-style="font-weight: bold; font-size: 18px;"
             :rules="[
               val =>
                 changeFor > totalPrice + deliveryRating ||
@@ -213,6 +190,12 @@
             v-close-popup
             @click="changeForLabel = null"
           />
+
+          <q-btn
+            color="primary"
+            label="Trocar"
+            @click="verifyAndCloseChangeDialog"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -220,28 +203,33 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
+import { mapGetters, mapActions } from "vuex";
 import AddressBanner from "../../components/user/cart/AddressBanner.vue";
 import SubtotalList from "../../components/user/cart/SubtotalList.vue";
+import PaymentMethodSelection from "../../components/user/cart/PaymentMethodSelection.vue";
+import PaymentDescription from "../../components/user/cart/PaymentDescription.vue";
 
 export default {
   components: {
     AddressBanner,
-    SubtotalList
+    SubtotalList,
+    PaymentMethodSelection,
+    PaymentDescription
   },
   data: () => ({
-    paymentMethod: null,
     changeForLabel: null,
-    changeFor: 0,
-    change: 0,
     step: 1,
     deliveryRating: 2,
     changeDialog: false
   }),
   computed: {
-    ...mapGetters("products", ["products"]),
-    ...mapGetters("cart", ["orderItems", "totalPrice"])
+    ...mapGetters("cart", [
+      "orderItems",
+      "totalPrice",
+      "paymentMethod",
+      "changeFor",
+      "change"
+    ])
   },
   watch: {
     paymentMethod: function(value) {
@@ -249,15 +237,19 @@ export default {
     },
 
     changeForLabel: function(value) {
-      this.changeFor = parseFloat(value.replace(",", "."));
-      this.change = this.changeFor - (this.totalPrice + this.deliveryRating);
+      this.updateChangeFor(parseFloat(value.replace(",", ".")));
+      this.updateChange(
+        this.changeFor - (this.totalPrice + this.deliveryRating)
+      );
     }
   },
   methods: {
-    getProductName(id) {
-      const product = this.products.find(product => product._id === id);
-      return product.name;
-    }
+    verifyAndCloseChangeDialog() {
+      if (this.changeFor > this.totalPrice + this.deliveryRating)
+        this.changeDialog = false;
+    },
+
+    ...mapActions("cart", ["updateChangeFor", "updateChange"])
   }
 };
 </script>
