@@ -20,7 +20,14 @@
     </q-header>
 
     <q-page-container>
-      <router-view />
+      <transition
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+        appear
+        :duration="300"
+      >
+        <router-view />
+      </transition>
     </q-page-container>
 
     <div class="row bg-grey-1 q-pa-xl">

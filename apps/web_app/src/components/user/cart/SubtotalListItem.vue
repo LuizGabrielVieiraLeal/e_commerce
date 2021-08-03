@@ -28,22 +28,22 @@
     <q-item-section side>
       <q-item-label caption>
         <q-btn
+          @click="decrement"
+          :disabled="quantity <= 0"
           color="primary"
           round
           dense
           size="xs"
           icon="remove"
-          @click="decrement"
-          :disabled="quantity <= 0"
         />
         <span class="text-bold q-mx-md">{{ quantity }}</span>
         <q-btn
+          @click="increment"
           color="primary"
           round
           dense
           size="xs"
           icon="add"
-          @click="increment"
         />
       </q-item-label>
     </q-item-section>
@@ -95,7 +95,7 @@ export default {
       }
     },
 
-    ...mapGetters("cart", ["orderItems", "totalPrice"])
+    ...mapGetters("cart", ["orderItems", "totalPrice", "totalItems"])
   },
   created: function() {
     this.quantity = this.orderItem.quantity;
@@ -123,6 +123,13 @@ export default {
       };
 
       this.updateCartItems(item);
+
+      if (this.totalItems === 0) {
+        this.$q.notify(
+          "Sua sacola está vazia, fique a vontade para fazer novos pedidos."
+        );
+        this.$router.push("/user/home");
+      }
     },
 
     ...mapActions("cart", ["updateCartItems"])

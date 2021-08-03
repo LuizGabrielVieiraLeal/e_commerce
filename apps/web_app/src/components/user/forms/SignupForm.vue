@@ -28,6 +28,7 @@
           outlined
           label="Celular (Whatsapp)*"
           mask="(##) # #### - ####"
+          unmasked-value
           v-model="newUser.phone"
           required
         />

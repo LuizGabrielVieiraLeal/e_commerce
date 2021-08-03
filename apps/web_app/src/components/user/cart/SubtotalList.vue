@@ -10,11 +10,11 @@
       }}
     </q-item-label>
 
-    <template v-for="item in orderItems">
+    <template v-for="orderItem in orderItems">
       <subtotal-list-item
-        :key="item.product"
-        :product="getProduct(item.product)"
-        :orderItem="item"
+        :key="orderItem.product"
+        :product="getProduct(orderItem.product)"
+        :orderItem="orderItem"
       />
     </template>
   </q-list>
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     getProduct(id) {
-      return this.products.filter(product => product._id === id)[0];
+      return this.products.find(product => product._id === id);
     }
   }
 };

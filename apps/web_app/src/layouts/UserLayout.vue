@@ -91,7 +91,7 @@ const menuList = [
     path: "/user/cart"
   },
   {
-    icon: "list_alt",
+    icon: "receipt",
     label: "Pedidos",
     separator: false,
     path: "/user/orders"
