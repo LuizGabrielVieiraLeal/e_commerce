@@ -30,3 +30,10 @@ export function setChangeFor(state, changeFor) {
 export function setChange(state, change) {
   state.change = change;
 }
+
+export function resetDefault(state) {
+  state.orderItems = [];
+  state.paymentMethod = null;
+  state.changeFor = null;
+  state.change = null;
+}

@@ -14,3 +14,7 @@ export function updateChangeFor(context, changeFor) {
 export function updateChange(context, change) {
   context.commit("setChange", change);
 }
+
+export function resetCart(context) {
+  context.commit("resetDefault");
+}

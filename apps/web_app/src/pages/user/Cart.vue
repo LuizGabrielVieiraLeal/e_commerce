@@ -111,6 +111,18 @@
                 label="Alterar"
                 @click="changeDialog = true"
               />
+
+              <br />
+
+              <span class="q-my-none q-mx-md">
+                Troco: R$
+                {{
+                  change
+                    .toFixed(2)
+                    .toString()
+                    .replace(".", ",")
+                }}
+              </span>
             </template>
 
             <template v-if="paymentMethod === 'CASH' && !changeFor">
@@ -144,10 +156,18 @@
               />
 
               <q-btn
-                v-if="step < 3"
+                v-if="step < 2"
                 @click="$refs.stepper.next()"
                 color="primary"
-                :label="step === 2 ? 'Fazer pedido' : 'Continuar'"
+                label="Continuar"
+              />
+
+              <q-btn
+                v-if="step === 2"
+                @click="onSubmit"
+                :loading="loading"
+                color="primary"
+                label="Fazer pedido"
               />
             </q-stepper-navigation>
           </template>
@@ -203,6 +223,7 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
 import { mapGetters, mapActions } from "vuex";
 import AddressBanner from "../../components/user/cart/AddressBanner.vue";
 import SubtotalList from "../../components/user/cart/SubtotalList.vue";
@@ -217,10 +238,11 @@ export default {
     PaymentDescription
   },
   data: () => ({
-    changeForLabel: null,
+    loading: false,
+    changeDialog: false,
     step: 1,
-    deliveryRating: 2,
-    changeDialog: false
+    changeForLabel: null,
+    deliveryRating: 2
   }),
   computed: {
     ...mapGetters("cart", [
@@ -244,12 +266,44 @@ export default {
     }
   },
   methods: {
+    onSubmit() {
+      this.loading = true;
+
+      const data = {
+        items: this.orderItems,
+        paymentMethod: this.paymentMethod,
+        changeFor: this.changeFor,
+        change: this.change
+      };
+
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation($data: OrderCreateInput!) {
+              createOrder(data: $data) {
+                _id
+              }
+            }
+          `,
+          variables: {
+            data: data
+          }
+        })
+        .then(() => {
+          this.$q.notify("Pedido realizado com sucesso!");
+          this.resetCart();
+          this.$router.push("/user/home");
+        });
+
+      this.loading = true;
+    },
+
     verifyAndCloseChangeDialog() {
       if (this.changeFor > this.totalPrice + this.deliveryRating)
         this.changeDialog = false;
     },
 
-    ...mapActions("cart", ["updateChangeFor", "updateChange"])
+    ...mapActions("cart", ["updateChangeFor", "updateChange", "resetCart"])
   }
 };
 </script>
