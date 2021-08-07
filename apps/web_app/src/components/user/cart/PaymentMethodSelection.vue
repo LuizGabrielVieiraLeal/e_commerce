@@ -6,29 +6,31 @@
 
     <q-radio
       class="q-ml-xs q-mr-md"
-      v-model="paymentMethod"
+      v-model="payment"
       val="CASH"
       label="Dinheiro"
     />
-    <q-radio
-      v-model="paymentMethod"
-      val="CREDIT_CARD"
-      label="Cartão de crédito"
-    />
+    <q-radio v-model="payment" val="CREDIT_CARD" label="Cartão" />
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data: () => ({
-    paymentMethod: null
+    payment: null
   }),
+  computed: {
+    ...mapGetters("cart", ["paymentMethod"])
+  },
   watch: {
-    paymentMethod: function(value) {
+    payment: function(value) {
       this.updatePaymentMethod(value);
     }
+  },
+  mounted: function() {
+    if (this.paymentMethod) this.payment = this.paymentMethod;
   },
   methods: {
     ...mapActions("cart", ["updatePaymentMethod"])

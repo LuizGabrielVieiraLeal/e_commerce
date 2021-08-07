@@ -8,6 +8,7 @@
     <div class="row">
       <div class="col-xs-12">
         <q-stepper
+          v-if="orderItems.length > 0"
           v-model="step"
           ref="stepper"
           color="primary"
@@ -61,8 +62,6 @@
             :done="step > 2"
             class="order-step"
           >
-            <payment-method-selection />
-
             <payment-description />
 
             <q-separator class="q-my-md" />
@@ -89,59 +88,77 @@
               }}
             </p>
 
-            <template v-if="changeFor && change > 0">
-              <q-separator class="q-my-md" />
+            <q-tabs
+              v-model="tab"
+              no-caps
+              outside-arrows
+              mobile-arrows
+              align="justify"
+              class="bg-white text-primary q-mt-lg"
+            >
+              <q-tab name="payOnDelivery" label="Pague na entrega" />
+              <q-tab name="payOnApp" label="Pague pelo app" />
+            </q-tabs>
+            <q-tab-panels v-model="tab" animated>
+              <q-tab-panel name="payOnDelivery">
+                <payment-method-selection />
+                <template v-if="changeFor && change > 0">
+                  <q-separator class="q-my-md" />
 
-              <span class="q-my-none q-mx-md">
-                Troco para: R$
-                {{
-                  changeFor
-                    .toFixed(2)
-                    .toString()
-                    .replace(".", ",")
-                }}
-              </span>
+                  <span class="q-my-none q-mx-md">
+                    Troco para: R$
+                    {{
+                      changeFor
+                        .toFixed(2)
+                        .toString()
+                        .replace(".", ",")
+                    }}
+                  </span>
 
-              <q-btn
-                flat
-                dense
-                class="q-ml-lg"
-                size="sm"
-                color="primary"
-                label="Alterar"
-                @click="changeDialog = true"
-              />
+                  <q-btn
+                    flat
+                    dense
+                    class="q-ml-lg"
+                    size="sm"
+                    color="primary"
+                    label="Alterar"
+                    @click="changeDialog = true"
+                  />
 
-              <br />
+                  <br />
 
-              <span class="q-my-none q-mx-md">
-                Troco: R$
-                {{
-                  change
-                    .toFixed(2)
-                    .toString()
-                    .replace(".", ",")
-                }}
-              </span>
-            </template>
+                  <span class="q-my-none q-mx-md">
+                    Troco: R$
+                    {{
+                      change
+                        .toFixed(2)
+                        .toString()
+                        .replace(".", ",")
+                    }}
+                  </span>
+                </template>
 
-            <template v-if="paymentMethod === 'CASH' && !changeFor">
-              <q-separator class="q-my-md" />
+                <template v-if="paymentMethod === 'CASH' && !changeFor">
+                  <q-separator class="q-my-md" />
 
-              <span class="q-my-none q-mx-md">
-                Não preciso de troco
-              </span>
+                  <span class="q-my-none q-mx-md">
+                    Não preciso de troco
+                  </span>
 
-              <q-btn
-                flat
-                dense
-                class="q-ml-lg"
-                size="sm"
-                color="primary"
-                label="Alterar"
-                @click="changeDialog = true"
-              />
-            </template>
+                  <q-btn
+                    flat
+                    dense
+                    class="q-ml-lg"
+                    size="sm"
+                    color="primary"
+                    label="Alterar"
+                    @click="changeDialog = true"
+                  />
+                </template>
+              </q-tab-panel>
+
+              <q-tab-panel name="payOnApp"> </q-tab-panel>
+            </q-tab-panels>
           </q-step>
 
           <template v-slot:navigation>
@@ -172,6 +189,17 @@
             </q-stepper-navigation>
           </template>
         </q-stepper>
+        <div class="text-primary text-center q-pa-md flex flex-center" v-else>
+          <div>
+            <div style="font-size: 30vh; opacity:.4">
+              <q-icon name="fastfood" />
+            </div>
+
+            <div class="text-h4" style="opacity:.4">
+              Sua sacola está vazia, fique a vontade para explorar nosso menu =)
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -241,6 +269,7 @@ export default {
     loading: false,
     changeDialog: false,
     step: 1,
+    tab: "payOnDelivery",
     changeForLabel: null,
     deliveryRating: 2
   }),

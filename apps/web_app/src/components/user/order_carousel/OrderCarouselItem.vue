@@ -4,25 +4,40 @@
       <div class="row">
         <div class="col-xs-3">
           <span class="date">
-            <span class="day-label">20</span><br />
-            <span class="month-label">12</span>
+            <span class="day-label">{{ day }}</span
+            ><br />
+            <span class="month-label">{{ month }}</span>
           </span>
         </div>
         <div class="col-xs-9">
-          <div>
-            Código: <span class="text-primary text-bold">#6k78ds123asdf</span>
+          <div class="text-bold">
+            Código do pedido: <span class="text-primary">{{ order._id }}</span>
           </div>
-          <div class="text-subtitle2">R$ 30,00</div>
         </div>
       </div>
     </q-card-section>
     <q-card-section>
-      <div :v-if="this.status === 0" class="row">
+      <div v-if="order.status === 'WAITING_PAYMENT'" class="row">
         <div class="col-xs-2">
-          <span class="pulse"></span>
+          <span class="pulse q-mt-md q-ml-xs"></span>
         </div>
         <div class="col-xs-10">
-          <p class="text-bold">Seu pedido está à caminho.</p>
+          <p class="text-bold q-mt-md">
+            Aguardando a aprovação do restaurante.
+          </p>
+        </div>
+      </div>
+      <div v-if="order.status === 'ON_THE_WAY'" class="row">
+        <div class="col-xs-2">
+          <span class="pulse q-mt-md q-ml-xs"></span>
+        </div>
+        <div class="col-xs-10">
+          <p class="text-bold q-mt-md">Seu pedido está a caminho.</p>
+        </div>
+      </div>
+      <div v-if="order.status === 'DELIVERED'" class="row">
+        <div class="col-xs-10 text-bold text-primary">
+          <q-badge class="q-mt-md" outline color="primary" label="Entrgue" />
         </div>
       </div>
     </q-card-section>
@@ -32,10 +47,19 @@
 <script>
 export default {
   props: {
-    status: {
-      type: Number,
+    order: {
+      type: Object,
       required: true
     }
+  },
+  data: () => ({
+    day: null,
+    month: null
+  }),
+  created: function() {
+    let date = this.order.createdAt.split("T")[0];
+    this.day = date.split("-")[2];
+    this.month = date.split("-")[1];
   }
 };
 </script>

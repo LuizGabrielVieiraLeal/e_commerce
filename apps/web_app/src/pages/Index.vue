@@ -7,9 +7,6 @@
         />
       </template>
       <h2 class="text-white text-weight-bold">Bateu aquela fome?</h2>
-      <p class="text-primary text-weight-bold sub-text">
-        Peça o rango do conforto de sua casa e deixe o resto com a gente =)
-      </p>
     </q-parallax>
 
     <div class="row">

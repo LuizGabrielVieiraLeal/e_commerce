@@ -14,248 +14,16 @@
       <div
         class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
       >
-        <order-carousel-item :status="0" />
-
-        <q-card class="q-mr-md order-card">
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-3">
-                <span class="date">
-                  <span class="day-label">20</span><br />
-                  <span class="month-label">12</span>
-                </span>
-              </div>
-              <div class="col-xs-9">
-                <div>
-                  Código:
-                  <span class="text-primary text-bold">#6k78ds123asdf</span>
-                </div>
-                <div class="text-subtitle2">R$ 30,00</div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-10 text-bold text-primary">
-                <q-badge outline color="primary" label="Entrgue" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-        <q-card class="q-mr-md order-card">
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-3">
-                <span class="date">
-                  <span class="day-label">20</span><br />
-                  <span class="month-label">12</span>
-                </span>
-              </div>
-              <div class="col-xs-9">
-                <div>
-                  Código:
-                  <span class="text-primary text-bold">#6k78ds123asdf</span>
-                </div>
-                <div class="text-subtitle2">R$ 30,00</div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-10 text-bold text-primary">
-                <q-badge outline color="black" label="Cancelado" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-        <q-card class="q-mr-md order-card">
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-3">
-                <span class="date">
-                  <span class="day-label">20</span><br />
-                  <span class="month-label">12</span>
-                </span>
-              </div>
-              <div class="col-xs-9">
-                <div>
-                  Código:
-                  <span class="text-primary text-bold">#6k78ds123asdf</span>
-                </div>
-                <div class="text-subtitle2">R$ 30,00</div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-10 text-bold text-primary">
-                <q-badge outline color="primary" label="Entrgue" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-        <q-card class="q-mr-md order-card">
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-3">
-                <span class="date">
-                  <span class="day-label">20</span><br />
-                  <span class="month-label">12</span>
-                </span>
-              </div>
-              <div class="col-xs-9">
-                <div>
-                  Código:
-                  <span class="text-primary text-bold">#6k78ds123asdf</span>
-                </div>
-                <div class="text-subtitle2">R$ 30,00</div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-10 text-bold text-primary">
-                <q-badge outline color="primary" label="Entrgue" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
+        <template v-for="(order, index) in orders">
+          <order-carousel-item :key="index" v-if="index < 4" :order="order" />
+        </template>
       </div>
     </q-carousel-slide>
-    <q-carousel-slide :name="2" class="column no-wrap">
+    <q-carousel-slide v-if="orders.length > 4" :name="2" class="column no-wrap">
       <div
         class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
       >
-        <q-card class="q-mr-md order-card">
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-3">
-                <span class="date">
-                  <span class="day-label">20</span><br />
-                  <span class="month-label">12</span>
-                </span>
-              </div>
-              <div class="col-xs-9">
-                <div>
-                  Código:
-                  <span class="text-primary text-bold">#6k78ds123asdf</span>
-                </div>
-                <div class="text-subtitle2">R$ 30,00</div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-10 text-bold text-primary">
-                <q-badge outline color="black" label="Cancelado" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-        <q-card class="q-mr-md order-card">
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-3">
-                <span class="date">
-                  <span class="day-label">20</span><br />
-                  <span class="month-label">12</span>
-                </span>
-              </div>
-              <div class="col-xs-9">
-                <div>
-                  Código:
-                  <span class="text-primary text-bold">#6k78ds123asdf</span>
-                </div>
-                <div class="text-subtitle2">R$ 30,00</div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-10 text-bold text-primary">
-                <q-badge outline color="primary" label="Entrgue" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-        <q-card class="q-mr-md order-card">
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-3">
-                <span class="date">
-                  <span class="day-label">20</span><br />
-                  <span class="month-label">12</span>
-                </span>
-              </div>
-              <div class="col-xs-9">
-                <div>
-                  Código:
-                  <span class="text-primary text-bold">#6k78ds123asdf</span>
-                </div>
-                <div class="text-subtitle2">R$ 30,00</div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-10 text-bold text-primary">
-                <q-badge outline color="black" label="Cancelado" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-        <q-card class="q-mr-md order-card">
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-3">
-                <span class="date">
-                  <span class="day-label">20</span><br />
-                  <span class="month-label">12</span>
-                </span>
-              </div>
-              <div class="col-xs-9">
-                <div>
-                  Código:
-                  <span class="text-primary text-bold">#6k78ds123asdf</span>
-                </div>
-                <div class="text-subtitle2">R$ 30,00</div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-10 text-bold text-primary">
-                <q-badge outline color="primary" label="Entrgue" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
-        <q-card class="q-mr-md order-card">
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-3">
-                <span class="date">
-                  <span class="day-label">20</span><br />
-                  <span class="month-label">12</span>
-                </span>
-              </div>
-              <div class="col-xs-9">
-                <div>
-                  Código:
-                  <span class="text-primary text-bold">#6k78ds123asdf</span>
-                </div>
-                <div class="text-subtitle2">R$ 30,00</div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section>
-            <div class="row">
-              <div class="col-xs-10 text-bold text-primary">
-                <q-badge outline color="primary" label="Entrgue" />
-              </div>
-            </div>
-          </q-card-section>
-        </q-card>
+        <order-carousel-item :key="index" v-if="index >= 4" :order="order" />
       </div>
     </q-carousel-slide>
   </q-carousel>
@@ -265,6 +33,12 @@
 import OrderCarouselItem from "./OrderCarouselItem.vue";
 
 export default {
+  props: {
+    orders: {
+      type: Array,
+      required: true
+    }
+  },
   components: {
     OrderCarouselItem
   },
