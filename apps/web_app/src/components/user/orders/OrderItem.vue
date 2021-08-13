@@ -1,15 +1,15 @@
 <template>
-  <q-card class="q-mr-md order-card">
+  <q-card :class="isCarouselItem ? 'q-mr-md order-card' : 'q-mt-md'">
     <q-card-section>
       <div class="row">
-        <div class="col-xs-3">
+        <div :class="isCarouselItem ? 'col-xs-3' : 'col-xs-1'">
           <span class="date">
             <span class="day-label">{{ day }}</span
             ><br />
             <span class="month-label">{{ month }}</span>
           </span>
         </div>
-        <div class="col-xs-9">
+        <div :class="isCarouselItem ? 'col-xs-9' : 'col-xs-11'">
           <div class="text-bold">
             Código do pedido: <span class="text-primary">{{ order._id }}</span>
           </div>
@@ -17,26 +17,18 @@
       </div>
     </q-card-section>
     <q-card-section>
-      <div v-if="order.status === 'WAITING_PAYMENT'" class="row">
-        <div class="col-xs-2">
+      <div v-if="order.status !== 'DELIVERED'" class="row">
+        <div :class="isCarouselItem ? 'col-xs-2' : 'col-xs-1'">
           <span class="pulse q-mt-md q-ml-xs"></span>
         </div>
-        <div class="col-xs-10">
+        <div :class="isCarouselItem ? 'col-xs-10' : 'col-xs-11'">
           <p class="text-bold q-mt-md">
             Aguardando a aprovação do restaurante.
           </p>
         </div>
       </div>
-      <div v-if="order.status === 'ON_THE_WAY'" class="row">
-        <div class="col-xs-2">
-          <span class="pulse q-mt-md q-ml-xs"></span>
-        </div>
-        <div class="col-xs-10">
-          <p class="text-bold q-mt-md">Seu pedido está a caminho.</p>
-        </div>
-      </div>
       <div v-if="order.status === 'DELIVERED'" class="row">
-        <div class="col-xs-10 text-bold text-primary">
+        <div class="col-xs-12 text-bold text-primary">
           <q-badge class="q-mt-md" outline color="primary" label="Entrgue" />
         </div>
       </div>
@@ -50,6 +42,10 @@ export default {
     order: {
       type: Object,
       required: true
+    },
+    isCarouselItem: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -63,3 +59,21 @@ export default {
   }
 };
 </script>
+
+<style lang="css" scoped>
+.order-card {
+  min-width: 270px;
+  max-width: 400px;
+}
+.date {
+  font-size: 25px;
+  font-weight: bolder;
+}
+.day-label {
+  text-decoration: underline;
+}
+.month-label {
+  position: absolute;
+  margin-top: -10px;
+}
+</style>

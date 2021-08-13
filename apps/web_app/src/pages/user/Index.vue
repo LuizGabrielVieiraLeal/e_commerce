@@ -30,7 +30,7 @@
 
 <script>
 import gql from "graphql-tag";
-import OrderCarousel from "../../components/user/order_carousel/OrderCarousel.vue";
+import OrderCarousel from "../../components/user/orders/OrderCarousel.vue";
 import MenuTabs from "../../components/user/menu/MenuTabs.vue";
 import BottomSheet from "../../components/user/cart/BottomSheet.vue";
 
@@ -56,5 +56,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>

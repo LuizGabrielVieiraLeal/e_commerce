@@ -15,7 +15,12 @@
         class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
       >
         <template v-for="(order, index) in orders">
-          <order-carousel-item :key="index" v-if="index < 4" :order="order" />
+          <order-item
+            :key="index"
+            v-if="index < 4"
+            :order="order"
+            :isCarouselItem="true"
+          />
         </template>
       </div>
     </q-carousel-slide>
@@ -23,14 +28,14 @@
       <div
         class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"
       >
-        <order-carousel-item :key="index" v-if="index >= 4" :order="order" />
+        <order-item :key="index" v-if="index >= 4" :order="order" />
       </div>
     </q-carousel-slide>
   </q-carousel>
 </template>
 
 <script>
-import OrderCarouselItem from "./OrderCarouselItem.vue";
+import OrderItem from "./OrderItem.vue";
 
 export default {
   props: {
@@ -40,7 +45,7 @@ export default {
     }
   },
   components: {
-    OrderCarouselItem
+    OrderItem
   },
   data: () => ({
     slide: 1
@@ -48,23 +53,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .carousel {
   height: 250px;
-}
-.order-card {
-  min-width: 270px;
-  max-width: 400px;
-}
-.date {
-  font-size: 25px;
-  font-weight: bolder;
-}
-.day-label {
-  text-decoration: underline;
-}
-.month-label {
-  position: absolute;
-  margin-top: -10px;
 }
 </style>

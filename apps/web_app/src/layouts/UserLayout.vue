@@ -20,7 +20,7 @@
         <q-btn class="q-mr-md" round color="primary" icon="account_circle">
           <q-menu>
             <q-list style="min-width: 100px">
-              <q-item clickable v-close-popup>
+              <q-item clickable v-close-popup @click="settingsDialog = true">
                 <q-item-section>Configurações</q-item-section>
               </q-item>
               <q-separator />
@@ -71,11 +71,16 @@
         <router-view />
       </transition>
     </q-page-container>
+
+    <q-dialog v-model="settingsDialog">
+      <settings-card />
+    </q-dialog>
   </q-layout>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import SettingsCard from "../components/user/settings/SettingsCard.vue";
 
 const menuList = [
   {
@@ -99,9 +104,13 @@ const menuList = [
 ];
 
 export default {
+  components: {
+    SettingsCard
+  },
   data: () => ({
     drawer: true,
-    menuList
+    menuList,
+    settingsDialog: false
   }),
   computed: {
     ...mapGetters("user", ["currentUser"]),
