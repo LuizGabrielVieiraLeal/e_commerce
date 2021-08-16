@@ -1,42 +1,53 @@
 <template>
-  <q-card :class="isCarouselItem ? 'q-mr-md order-card' : 'q-mt-md'">
-    <q-card-section>
-      <div class="row">
-        <div :class="isCarouselItem ? 'col-xs-3' : 'col-xs-1'">
-          <span class="date">
-            <span class="day-label">{{ day }}</span
-            ><br />
-            <span class="month-label">{{ month }}</span>
-          </span>
-        </div>
-        <div :class="isCarouselItem ? 'col-xs-9' : 'col-xs-11'">
-          <div class="text-bold">
-            Código do pedido: <span class="text-primary">{{ order._id }}</span>
+  <div>
+    <q-card
+      :class="isCarouselItem ? 'q-mr-md order-card' : 'q-mt-md'"
+      @click="dialog = true"
+    >
+      <q-card-section>
+        <div class="row">
+          <div :class="isCarouselItem ? 'col-xs-3' : 'col-xs-1'">
+            <span class="date">
+              <span class="day-label">{{ day }}</span
+              ><br />
+              <span class="month-label">{{ month }}</span>
+            </span>
+          </div>
+          <div :class="isCarouselItem ? 'col-xs-9' : 'col-xs-11'">
+            <div class="text-bold">
+              Código do pedido:
+              <span class="text-primary">{{ order._id }}</span>
+            </div>
           </div>
         </div>
-      </div>
-    </q-card-section>
-    <q-card-section>
-      <div v-if="order.status !== 'DELIVERED'" class="row">
-        <div :class="isCarouselItem ? 'col-xs-2' : 'col-xs-1'">
-          <span class="pulse q-mt-md q-ml-xs"></span>
+      </q-card-section>
+      <q-card-section>
+        <div v-if="order.status !== 'DELIVERED'" class="row">
+          <div :class="isCarouselItem ? 'col-xs-2' : 'col-xs-1'">
+            <span class="pulse q-mt-md q-ml-xs"></span>
+          </div>
+          <div :class="isCarouselItem ? 'col-xs-10' : 'col-xs-11'">
+            <p class="text-bold q-mt-md">
+              Aguardando a aprovação do restaurante.
+            </p>
+          </div>
         </div>
-        <div :class="isCarouselItem ? 'col-xs-10' : 'col-xs-11'">
-          <p class="text-bold q-mt-md">
-            Aguardando a aprovação do restaurante.
-          </p>
+        <div v-if="order.status === 'DELIVERED'" class="row">
+          <div class="col-xs-12 text-bold text-primary">
+            <q-badge class="q-mt-md" outline color="primary" label="Entrgue" />
+          </div>
         </div>
-      </div>
-      <div v-if="order.status === 'DELIVERED'" class="row">
-        <div class="col-xs-12 text-bold text-primary">
-          <q-badge class="q-mt-md" outline color="primary" label="Entrgue" />
-        </div>
-      </div>
-    </q-card-section>
-  </q-card>
+      </q-card-section>
+    </q-card>
+    <q-dialog v-model="dialog">
+      <order-card-dialog :order="order" />
+    </q-dialog>
+  </div>
 </template>
 
 <script>
+import OrderCardDialog from "./OrderCardDialog.vue";
+
 export default {
   props: {
     order: {
@@ -48,7 +59,11 @@ export default {
       default: false
     }
   },
+  components: {
+    OrderCardDialog
+  },
   data: () => ({
+    dialog: false,
     day: null,
     month: null
   }),

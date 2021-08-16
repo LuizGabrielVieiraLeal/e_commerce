@@ -16,6 +16,7 @@
 <script>
 import gql from "graphql-tag";
 import OrderItem from "../../components/user/orders/OrderItem.vue";
+
 export default {
   components: {
     OrderItem
@@ -26,6 +27,19 @@ export default {
         query {
           orders(limit: 20, orderBy: createdAt_DESC) {
             _id
+            items {
+              product {
+                name
+                price
+                unit
+              }
+              quantity
+              total
+            }
+            total
+            paymentMethod
+            changeFor
+            change
             status
             createdAt
           }

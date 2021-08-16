@@ -21,6 +21,13 @@
       required
     />
     <div class="row justify-end q-mt-lg">
+      <q-btn
+        class="q-mr-xs"
+        flat
+        label="Fechar"
+        color="primary"
+        v-close-popup
+      />
       <q-btn label="Salvar" type="submit" color="primary" />
     </div>
   </q-form>

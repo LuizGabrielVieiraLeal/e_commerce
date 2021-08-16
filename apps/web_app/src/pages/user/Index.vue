@@ -46,6 +46,19 @@ export default {
         query {
           orders(limit: 8, orderBy: createdAt_DESC) {
             _id
+            items {
+              product {
+                name
+                price
+                unit
+              }
+              quantity
+              total
+            }
+            total
+            paymentMethod
+            changeFor
+            change
             status
             createdAt
           }
