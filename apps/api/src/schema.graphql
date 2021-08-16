@@ -59,6 +59,13 @@ enum Unit {
   GR
 }
 
+enum ProductOrderByInput {
+  name_ASC
+  name_DESC
+  price_ASC
+  price_DESC
+}
+
 type Product {
   _id: ID!
   category: Category!
@@ -82,13 +89,6 @@ input ProductUpdateInput {
   description: String
   price: Float
   unit: Unit
-}
-
-enum ProductOrderByInput {
-  name_ASC
-  name_DESC
-  price_ASC
-  price_DESC
 }
 
 input ProductWhereInput {
@@ -126,6 +126,15 @@ enum OrderStatus {
   DELIVERED
 }
 
+enum OrderOrderByInput {
+  total_ASC
+  total_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
 type Order {
   _id: ID!
   owner: User!
@@ -137,6 +146,11 @@ type Order {
   status: OrderStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type OrderSubscriptionPayload {
+  mutation: MutationType!
+  node: Order!
 }
 
 input OrderCreateInput {
@@ -154,15 +168,6 @@ input OrderUpdateInput {
   itemsToAdd: [OrderItemCreateInput!]
   itemsToUpdate: [OrderItemUpdateInput!]
   itemsToRemove: [ID!]
-}
-
-enum OrderOrderByInput {
-  total_ASC
-  total_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 input OrderWhereInput {
@@ -203,6 +208,10 @@ input OrderWhereInput {
   NOR: [OrderWhereInput!]
 }
 
+input OrderSubscriptionWhereInput {
+  mutationIn: [MutationType!]!
+}
+
 # OrderItem
 type OrderItem {
   _id: ID!
@@ -224,6 +233,13 @@ input OrderItemUpdateInput {
   product: ID!
   quantity: Float!
   total: Float!
+}
+
+# Generic mutation types
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
 }
 
 # Queries and Mutations
@@ -260,4 +276,8 @@ type Mutation {
   createOrder(data: OrderCreateInput!): Order! @auth
   deleteOrder(_id: ID!): Order! @auth
   updateOrder(data: OrderUpdateInput!, _id: ID!): Order! @auth
+}
+
+type Subscription {
+  order(where: OrderSubscriptionWhereInput!): OrderSubscriptionPayload!
 }
