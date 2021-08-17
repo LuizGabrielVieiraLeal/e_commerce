@@ -208,10 +208,6 @@ input OrderWhereInput {
   NOR: [OrderWhereInput!]
 }
 
-input OrderSubscriptionWhereInput {
-  mutationIn: [MutationType!]!
-}
-
 # OrderItem
 type OrderItem {
   _id: ID!
@@ -235,11 +231,15 @@ input OrderItemUpdateInput {
   total: Float!
 }
 
-# Generic mutation types
+# Generic
 enum MutationType {
   CREATED
   UPDATED
   DELETED
+}
+
+input SubscriptionWhereInput {
+  mutationIn: [MutationType!]!
 }
 
 # Queries and Mutations
@@ -279,5 +279,5 @@ type Mutation {
 }
 
 type Subscription {
-  order(where: OrderSubscriptionWhereInput!): OrderSubscriptionPayload!
+  order(where: SubscriptionWhereInput!): OrderSubscriptionPayload!
 }
