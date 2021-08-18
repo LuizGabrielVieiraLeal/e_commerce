@@ -17,6 +17,7 @@ import {
   OrderDeleteArgs,
   OrderUpdateArgs,
   OrderDocument,
+  MutationType,
 } from '../types'
 import { findDocument, findOrderItem, issueToken } from '../utils'
 import { CustomError } from '../errors'
@@ -144,7 +145,7 @@ const updateProduct: Resolver<ProductUpdateArgs> = async (_, args, { db }) => {
 const createOrder: Resolver<OrderCreateArgs> = async (
   _,
   args,
-  { db, authUser },
+  { db, authUser, pubsub },
 ) => {
   const { Order } = db
   const { data } = args
@@ -161,13 +162,18 @@ const createOrder: Resolver<OrderCreateArgs> = async (
     owner,
   }).save()
 
+  pubsub.publish('ORDER_CREATED', {
+    mutation: MutationType.CREATED,
+    node: order,
+  })
+
   return order
 }
 
 const deleteOrder: Resolver<OrderDeleteArgs> = async (
   _,
   args,
-  { db, authUser },
+  { db, authUser, pubsub },
 ) => {
   const { _id } = args
   const { _id: owner, role } = authUser
@@ -182,13 +188,20 @@ const deleteOrder: Resolver<OrderDeleteArgs> = async (
     where,
   })
 
-  return order.remove()
+  await order.remove()
+
+  pubsub.publish('ORDER_DELETED', {
+    mutation: MutationType.DELETED,
+    node: order,
+  })
+
+  return order
 }
 
 const updateOrder: Resolver<OrderUpdateArgs> = async (
   _,
   args,
-  { db, authUser },
+  { db, authUser, pubsub },
 ) => {
   const { data, _id } = args
   const { _id: user, role } = authUser
@@ -249,7 +262,14 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
   order.status = status || order.status
   order.total = total
 
-  return order.save()
+  await order.save()
+
+  pubsub.publish('ORDER_UPDATED', {
+    mutation: MutationType.UPDATED,
+    node: order,
+  })
+
+  return order
 }
 
 export default {

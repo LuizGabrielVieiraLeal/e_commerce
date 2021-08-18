@@ -279,5 +279,5 @@ type Mutation {
 }
 
 type Subscription {
-  order(where: SubscriptionWhereInput!): OrderSubscriptionPayload!
+  order(where: SubscriptionWhereInput!): OrderSubscriptionPayload! @auth
 }
