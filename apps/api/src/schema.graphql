@@ -114,10 +114,12 @@ input ProductWhereInput {
 # Order
 enum OrderPaymentMethod {
   CASH
+  CARD_ON_DELIVERY
   CREDIT_CARD
 }
 
 enum OrderStatus {
+  PENDING
   WAITING_PAYMENT
   IN_QUEUE
   PREPARING

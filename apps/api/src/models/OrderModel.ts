@@ -36,7 +36,7 @@ const orderSchema = new Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ['CASH', 'CREDIT_CARD'],
+      enum: ['CASH', 'CARD_ON_DELIVERY', 'CREDIT_CARD'],
       required: true,
     },
     changeFor: {
@@ -48,6 +48,7 @@ const orderSchema = new Schema(
     status: {
       type: String,
       enum: [
+        'PENDING',
         'WAITING_PAYMENT',
         'IN_QUEUE',
         'PREPARING',
@@ -55,7 +56,7 @@ const orderSchema = new Schema(
         'ON_THE_WAY',
         'DELIVERED',
       ],
-      default: 'WAITING_PAYMENT',
+      default: 'PENDING',
     },
   },
   {

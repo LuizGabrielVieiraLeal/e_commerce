@@ -10,7 +10,7 @@
       val="CASH"
       label="Dinheiro"
     />
-    <q-radio v-model="payment" val="CREDIT_CARD" label="Cartão" />
+    <q-radio v-model="payment" val="CARD_ON_DELIVERY" label="Maquininha" />
   </div>
 </template>
 

@@ -84,7 +84,7 @@
 
 <script>
 import SigninForm from "../components/shared/forms/SigninFom.vue";
-import SignupForm from "../components/user/forms/SignupForm.vue";
+import SignupForm from "../components/user/credentials/SignupForm.vue";
 
 export default {
   components: {

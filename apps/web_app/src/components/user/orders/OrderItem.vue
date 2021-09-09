@@ -22,19 +22,27 @@
         </div>
       </q-card-section>
       <q-card-section>
-        <div v-if="order.status !== 'DELIVERED'" class="row">
+        <div
+          v-if="order.status !== 'DELIVERED' && order.status !== 'CANCELED'"
+          class="row"
+        >
           <div :class="isCarouselItem ? 'col-xs-2' : 'col-xs-1'">
             <span class="pulse q-mt-md q-ml-xs"></span>
           </div>
           <div :class="isCarouselItem ? 'col-xs-10' : 'col-xs-11'">
             <p class="text-bold q-mt-md">
-              Aguardando a aprovação do restaurante.
+              {{ statusLabel }}
             </p>
           </div>
         </div>
-        <div v-if="order.status === 'DELIVERED'" class="row">
+        <div v-else class="row">
           <div class="col-xs-12 text-bold text-primary">
-            <q-badge class="q-mt-md" outline color="primary" label="Entrgue" />
+            <q-badge
+              class="q-mt-md"
+              outline
+              color="primary"
+              :label="statusLabel"
+            />
           </div>
         </div>
       </q-card-section>
@@ -67,6 +75,22 @@ export default {
     day: null,
     month: null
   }),
+  computed: {
+    statusLabel() {
+      switch (this.order.status) {
+        case "PENDING":
+          return "Aguardando aprovação do restaurante";
+        case "ON_THE_WAY":
+          return "Seu pedido está a caminho";
+        case "DELIVERED":
+          return "Entregue";
+        case "CANCELED":
+          return "Cancelado";
+        default:
+          return "Seu pedido está sendo preparado";
+      }
+    }
+  },
   created: function() {
     let date = this.order.createdAt.split("T")[0];
     this.day = date.split("-")[2];

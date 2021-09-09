@@ -62,14 +62,7 @@
     </q-drawer>
 
     <q-page-container class="q-pa-lg">
-      <transition
-        enter-active-class="animated fadeIn"
-        leave-active-class="animated fadeOut"
-        appear
-        :duration="300"
-      >
-        <router-view />
-      </transition>
+      <router-view />
     </q-page-container>
 
     <q-dialog v-model="settingsDialog">

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import ProfileForm from "../forms/ProfileForm.vue";
+import ProfileForm from "../credentials/ProfileForm.vue";
 
 export default {
   components: {

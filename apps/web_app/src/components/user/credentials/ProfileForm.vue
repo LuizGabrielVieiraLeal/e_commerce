@@ -3,7 +3,7 @@
     <q-input
       outlined
       v-model="form.name"
-      label="Nome *"
+      label="Nome*"
       lazy-rules
       required
       :rules="[
