@@ -36,10 +36,7 @@
         </div>
       </div>
     </q-card-section>
-    <div v-else class="row q-px-lg q-mt-sm">
-      <q-badge class="q-mx-sm" outline color="primary" :label="statusLabel" />
-    </div>
-    <q-card-section>
+    <q-card-section class="q-pt-none q-mt-none">
       <q-item-label header>
         Descrição do pedido
       </q-item-label>
@@ -69,7 +66,16 @@
         <span class="text-bold">{{ paymentMethodLabel }}</span>
       </p>
     </q-card-section>
-    <q-card-actions align="right">
+    <q-card-actions>
+      <q-badge
+        v-if="order.status === 'DELIVERED' || order.status === 'CANCELED'"
+        class="q-mx-sm"
+        outline
+        color="primary"
+        size="lg"
+        :label="statusLabel"
+      />
+      <q-space />
       <q-btn flat label="Fechar" color="primary" v-close-popup />
     </q-card-actions>
   </q-card>

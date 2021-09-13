@@ -60,6 +60,17 @@ export default {
                 token
                 user {
                   _id
+                  address {
+                    _id
+                    street
+                    number
+                    district
+                    complement
+                    city
+                    state
+                    country
+                    zipCode
+                  }
                   name
                   email
                   phone

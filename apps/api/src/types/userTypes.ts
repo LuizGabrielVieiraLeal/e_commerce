@@ -1,4 +1,5 @@
 import { Document, Types } from 'mongoose'
+import { Address } from '.'
 
 export enum UserRole {
   USER = 'USER',
@@ -7,6 +8,7 @@ export enum UserRole {
 
 export interface User {
   _id: Types.ObjectId
+  address: Address | Types.ObjectId
   name: string
   email: string
   phone: string

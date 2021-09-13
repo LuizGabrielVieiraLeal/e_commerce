@@ -2,6 +2,10 @@ import { Schema, model } from 'mongoose'
 import { UserDocument } from '../types'
 
 const userSchema = new Schema({
+  address: {
+    type: Schema.Types.ObjectId,
+    ref: 'Address',
+  },
   name: {
     type: String,
     required: true,

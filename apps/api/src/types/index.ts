@@ -1,5 +1,6 @@
 export * from './modelsTypes'
 export * from './userTypes'
+export * from './addressTypes'
 export * from './categoryTypes'
 export * from './productTypes'
 export * from './orderTypes'

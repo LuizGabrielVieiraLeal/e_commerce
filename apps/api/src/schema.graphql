@@ -10,6 +10,7 @@ enum UserRole {
 
 type User {
   _id: ID!
+  address: Address
   name: String!
   email: String!
   phone: String!
@@ -31,6 +32,30 @@ input UserSignUpInput {
 input UserSignInInput {
   email: String!
   password: String!
+}
+
+# Address
+type Address {
+  _id: ID!
+  street: String!
+  number: String!
+  district: String!
+  complement: String
+  city: String!
+  state: String!
+  country: String!
+  zipCode: String!
+}
+
+input AddressCreateInput {
+  street: String!
+  number: String!
+  district: String!
+  complement: String
+  city: String!
+  state: String!
+  country: String!
+  zipCode: String!
 }
 
 # Category
@@ -267,6 +292,7 @@ type Query {
 type Mutation {
   signup(data: UserSignUpInput!): AuthPayload!
   signin(data: UserSignInInput!): AuthPayload!
+  createAddress(data: AddressCreateInput!): Address! @auth
   createCategory(data: CategoryCreateInput!): Category! @auth(role: ADMIN)
   deleteCategory(_id: ID!): Category! @auth(role: ADMIN)
   updateCategory(data: CategoryUpdateInput!, _id: ID!): Category!

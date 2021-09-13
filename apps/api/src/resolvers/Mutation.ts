@@ -5,6 +5,8 @@ import {
   UserRole,
   UserSignUpArgs,
   UserSignInArgs,
+  UserDocument,
+  AddressCreateArgs,
   CategoryCreateArgs,
   CategoryByIdArgs,
   CategoryUpdateArgs,
@@ -61,6 +63,31 @@ const signin: Resolver<UserSignInArgs> = async (_, args, { db }) => {
   const token = issueToken({ sub, role })
 
   return { token, user }
+}
+
+// Address
+const createAddress: Resolver<AddressCreateArgs> = async (
+  _,
+  args,
+  { db, authUser },
+) => {
+  const { Address } = db
+  const { data } = args
+
+  const address = new Address(data)
+  await address.save()
+
+  const user = await findDocument<UserDocument>({
+    db,
+    model: 'User',
+    field: '_id',
+    value: authUser._id,
+  })
+
+  user.address = address
+  await user.save()
+
+  return address
 }
 
 // Category
@@ -275,6 +302,7 @@ const updateOrder: Resolver<OrderUpdateArgs> = async (
 export default {
   signup,
   signin,
+  createAddress,
   createCategory,
   deleteCategory,
   updateCategory,

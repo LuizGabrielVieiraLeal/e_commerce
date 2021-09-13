@@ -217,7 +217,7 @@
             reverse-fill-mask
             v-model="changeForLabel"
             autofocus
-            @keyup.enter="changeDialog = false"
+            @keyup.enter="verifyAndCloseChangeDialog"
             input-style="font-weight: bold; font-size: 18px;"
             :rules="[
               val =>
