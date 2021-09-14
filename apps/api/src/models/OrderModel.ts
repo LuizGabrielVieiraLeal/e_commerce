@@ -55,6 +55,7 @@ const orderSchema = new Schema(
         'READY',
         'ON_THE_WAY',
         'DELIVERED',
+        'CANCELLED',
       ],
       default: 'PENDING',
     },

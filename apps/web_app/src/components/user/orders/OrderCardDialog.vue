@@ -6,7 +6,7 @@
       </div>
     </q-card-section>
     <q-card-section
-      v-if="order.status !== 'DELIVERED' && order.status !== 'CANCELED'"
+      v-if="order.status !== 'DELIVERED' && order.status !== 'CANCELLED'"
     >
       <div class="row">
         <div class="col-xs-12">
@@ -68,7 +68,7 @@
     </q-card-section>
     <q-card-actions>
       <q-badge
-        v-if="order.status === 'DELIVERED' || order.status === 'CANCELED'"
+        v-if="order.status === 'DELIVERED' || order.status === 'CANCELLED'"
         class="q-mx-sm"
         outline
         color="primary"
@@ -108,7 +108,7 @@ export default {
           return "Seu pedido está a caminho";
         case "DELIVERED":
           return "Entregue";
-        case "CANCELED":
+        case "CANCELLED":
           return "Cancelado";
         default:
           return "Seu pedido está sendo preparado";
@@ -122,7 +122,7 @@ export default {
         this.order.status !== "PENDING" &&
         this.order.status !== "ON_THE_WAY" &&
         this.order.status !== "DELIVERED" &&
-        this.order.status !== "CANCELED"
+        this.order.status !== "CANCELLED"
       );
     },
     onTheWay() {

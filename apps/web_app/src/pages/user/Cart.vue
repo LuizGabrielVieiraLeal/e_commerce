@@ -23,7 +23,7 @@
             :done="step > 1"
             class="order-step"
           >
-            <address-banner />
+            <address-banner :address="currentUser.address" />
 
             <q-separator class="q-mt-lg" />
 
@@ -31,7 +31,7 @@
 
             <q-separator />
 
-            <q-item-label header>
+            <q-item-label header class="text-bold">
               Taxa de entrega: R$
               {{
                 deliveryRating
@@ -274,6 +274,7 @@ export default {
     deliveryRating: 2
   }),
   computed: {
+    ...mapGetters("user", ["currentUser"]),
     ...mapGetters("cart", [
       "orderItems",
       "totalPrice",

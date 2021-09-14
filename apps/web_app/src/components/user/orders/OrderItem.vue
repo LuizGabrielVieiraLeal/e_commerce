@@ -23,7 +23,7 @@
       </q-card-section>
       <q-card-section>
         <div
-          v-if="order.status !== 'DELIVERED' && order.status !== 'CANCELED'"
+          v-if="order.status !== 'DELIVERED' && order.status !== 'CANCELLED'"
           class="row"
         >
           <div :class="isCarouselItem ? 'col-xs-2' : 'col-xs-1'">
@@ -84,7 +84,7 @@ export default {
           return "Seu pedido está a caminho";
         case "DELIVERED":
           return "Entregue";
-        case "CANCELED":
+        case "CANCELLED":
           return "Cancelado";
         default:
           return "Seu pedido está sendo preparado";

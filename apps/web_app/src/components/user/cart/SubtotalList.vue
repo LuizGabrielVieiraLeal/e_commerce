@@ -1,6 +1,6 @@
 <template>
   <q-list padding>
-    <q-item-label header>
+    <q-item-label header class="text-bold">
       Subtotal: R$
       {{
         totalPrice

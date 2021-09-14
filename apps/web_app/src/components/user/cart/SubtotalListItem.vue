@@ -13,8 +13,8 @@
       </q-item-section>
 
       <q-item-section>
-        <q-item-label>{{ product.name }}</q-item-label>
-        <q-item-label caption>
+        <q-item-label class="text-bold">{{ product.name }}</q-item-label>
+        <q-item-label caption class="text-bold">
           R$
           {{
             this.product.price
